@@ -6,6 +6,8 @@
 package extractvideos;
 
 import static java.lang.Math.log10;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  *
@@ -15,9 +17,9 @@ public class Video
 {
     private final String m_fileName;
     private final String m_caption;
-    private final String m_link;
+    private final URL m_link;
     
-    public Video (int p_vidIndex, String p_authors, String p_anime, String p_page)
+    public Video (int p_vidIndex, String p_authors, String p_anime, URL p_page) throws MalformedURLException
     {
 	m_caption = p_authors + " (" + p_anime + ")";
 	
@@ -34,9 +36,9 @@ public class Video
 	m_link = findLink(p_page);
     }
     
-    private String findLink (String p_link)
+    private URL findLink (URL p_link) throws MalformedURLException
     {
-	String videoLink = new String();
+	URL videoLink = new URL("");
 	
 	//download page source
 	//find video link in page
