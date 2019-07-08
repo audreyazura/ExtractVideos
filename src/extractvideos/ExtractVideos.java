@@ -51,6 +51,8 @@ public class ExtractVideos
 		String vidIndex = zeroPrefix + index;
 		currentVid.downloadVideo(dlFolder, vidIndex);
 		currentVid.makeSub(dlFolder, vidIndex);
+		
+		index += 1;
 	    }
 	    
 	} catch (FileNotFoundException ex)
