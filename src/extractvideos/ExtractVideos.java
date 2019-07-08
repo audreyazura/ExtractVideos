@@ -7,6 +7,7 @@ package extractvideos;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import static java.lang.Math.log10;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,26 +21,36 @@ public class ExtractVideos
 
     public static void main (String[] args)
     {
-	extract(652, "/home/audreyazura/Dev/Source/NetbeansProject/BaseSakuga.tsv");
+	extract("/home/audreyazura/Dev/Source/NetbeansProject/BaseSakuga.tsv");
     }
     
     /**
      * @param p_nCuts the maximum number of video in the base
      * @param p_sakugaCSV the address of the sakuga base
      */
-    public static void extract(int p_nCuts, String p_sakugaCSV)
+    public static void extract(String p_sakugaCSV)
     {
 	String dlFolder = "test";
 	
-	 List<Video> videoList;
+	List<Video> videoList;
 	try
 	{
-	    videoList = new SakugaDAO(p_nCuts, p_sakugaCSV).getVideoList();
+	    videoList = new SakugaDAO(p_sakugaCSV).getVideoList();
 	    
+	    int log10nVideo = (int) log10(videoList.size()-1);
+	    int index = 0;
 	    for (Video currentVid: videoList)
 	    {
-		currentVid.downloadVideo(dlFolder);
-		currentVid.makeSub(dlFolder);
+		String zeroPrefix = new String();
+		int nZeros = log10nVideo - (int) log10(index > 0 ? index : 1);
+		for (int i = 0 ; i < nZeros ; i+=1)
+		{
+		    zeroPrefix += "0";
+		
+		}
+		String vidIndex = zeroPrefix + index;
+		currentVid.downloadVideo(dlFolder, vidIndex);
+		currentVid.makeSub(dlFolder, vidIndex);
 	    }
 	    
 	} catch (FileNotFoundException ex)

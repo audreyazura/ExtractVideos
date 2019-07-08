@@ -5,6 +5,7 @@
  */
 package extractvideos;
 
+import static java.lang.Math.log10;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -14,16 +15,13 @@ import java.net.URL;
  */
 public class Video
 {
-    private final String m_fileName;
-    private final String m_caption;
+    private final String m_videoID;
     private final URL m_link;
     
-    public Video (String p_vidIndex, String p_authors, String p_anime, URL p_page) throws MalformedURLException
+    public Video (String p_authors, String p_anime, URL p_page) throws MalformedURLException
     {
-	m_caption = p_authors + " (" + p_anime + ")";
+	m_videoID = p_authors + " (" + p_anime + ")";
 	m_link = findLink(p_page);
-	//to be modified: use the link to the video to find the video format
-	m_fileName = p_vidIndex + " - " + m_caption;
     }
     
     private URL findLink (URL p_link) throws MalformedURLException
@@ -37,12 +35,15 @@ public class Video
 	return p_link;
     }
     
-    public void downloadVideo (String p_localFolder)
+    public void downloadVideo (String p_Folder, String p_videoIndex)
     {
-	//download video from m_link in p_localFolder
+	//find extension from m_link (should be of the form [address].webm or [address].mp4)
+	//fileName = p_Folder + p_videoIndex + " - " + m_videoID + "." + extension
+	//download video from m_link in fileName
+	
     }
     
-    public void makeSub (String p_localFolder)
+    public void makeSub (String p_Folder, String p_videoIndex)
     {
 	//create subtitle file
     }
