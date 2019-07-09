@@ -5,11 +5,14 @@
  */
 package extractvideos;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -20,21 +23,43 @@ public class Video
     private final String m_videoID;
     private final URL m_link;
     
-    public Video (String p_authors, String p_anime, URL p_page) throws MalformedURLException
+    public Video (String p_authors, String p_anime, URL p_page) throws MalformedURLException, IOException
     {
 	m_videoID = p_authors + " (" + p_anime + ")";
 	m_link = findLink(p_page);
     }
     
-    private URL findLink (URL p_link) throws MalformedURLException
+    private URL findLink (URL p_link) throws MalformedURLException, IOException
     {
-	URL videoLink;
+	URL videoLink = new URL(p_link.toString());
+	Pattern videoLinkPatttern = Pattern.compile("https://sakugabooru[.]com/data/[a-z0-9]*[.](m|w)(p|e)(4|bm)");
 	
-	//download page source
-	//find video link in page
-	//videoLink = pageLink;
+	if (Pattern.matches(p_link.getHost(), "www.sakugabooru.com"))
+	{
+	    BufferedInputStream booruPage = new BufferedInputStream(p_link.openStream());
 	
-	return p_link;
+	    int readByte;
+	    boolean foundAddress = false;
+	    while (((readByte = booruPage.read()) != -1) && !(foundAddress))
+	    {
+		char readChar = (char) readByte;
+		String readLine = new String("");
+
+		while (readChar != '\n')
+		{
+		    readLine += readChar;
+		    readChar = (char) booruPage.read();
+		}
+
+		Matcher linkMatcher = videoLinkPatttern.matcher(readLine);
+		if (foundAddress = linkMatcher.find())
+		{
+		    videoLink = new URL(linkMatcher.group());
+		}
+	    }
+	}
+	
+	return videoLink;
     }
     
     public void downloadVideo (String p_Folder, String p_videoIndex)
