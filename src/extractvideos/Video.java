@@ -5,7 +5,9 @@
  */
 package extractvideos;
 
-import static java.lang.Math.log10;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -43,8 +45,17 @@ public class Video
 	
     }
     
-    public void makeSub (String p_Folder, String p_videoIndex)
+    public void makeSub (String p_Folder, String p_videoIndex) throws IOException
     {
-	//create subtitle file
+	BufferedWriter subBuffer = new BufferedWriter(new FileWriter(p_Folder + "/" + p_videoIndex + " - " + m_videoID + ".srt"));
+	
+	subBuffer.write("1");
+	subBuffer.newLine();
+	subBuffer.write("00:00:00,0 --> 99:00:00,0");
+	subBuffer.newLine();
+	subBuffer.write(m_videoID);
+	
+	subBuffer.flush();
+
     }
 }

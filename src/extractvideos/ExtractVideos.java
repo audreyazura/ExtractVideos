@@ -5,6 +5,7 @@
  */
 package extractvideos;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import static java.lang.Math.log10;
@@ -21,41 +22,47 @@ public class ExtractVideos
 
     public static void main (String[] args)
     {
-	extract("/home/audreyazura/Dev/Source/NetbeansProject/BaseSakuga.tsv");
+	extract("/home/audreyazura/Documents/Nijikai/BaseSakuga.tsv");
     }
     
     /**
-     * @param p_nCuts the maximum number of video in the base
-     * @param p_sakugaCSV the address of the sakuga base
+     * @param p_fileSakuga the address of the sakuga base
      */
-    public static void extract(String p_sakugaCSV)
+    public static void extract(String p_fileSakuga)
     {
-	String dlFolder = "test";
-	
 	List<Video> videoList;
+	
 	try
 	{
-	    videoList = new SakugaDAO(p_sakugaCSV).getVideoList();
+	    File sakugaCSV = new File(p_fileSakuga);
+	    File dlFolder = new File(sakugaCSV.getParent() + "/Videos");
 	    
-	    int log10nVideo = (int) log10(videoList.size()-1);
-	    int index = 0;
-	    for (Video currentVid: videoList)
+	    if (dlFolder.mkdir() || dlFolder.isDirectory())
 	    {
-		String zeroPrefix = new String();
-		int nZeros = log10nVideo - (int) log10(index > 0 ? index : 1);
-		for (int i = 0 ; i < nZeros ; i+=1)
+		videoList = new SakugaDAO(sakugaCSV).getVideoList();
+	    
+		int log10nVideo = (int) log10(videoList.size()-1);
+		int index = 0;
+		for (Video currentVid: videoList)
 		{
-		    zeroPrefix += "0";
-		
+		    String zeroPrefix = new String();
+		    int nZeros = log10nVideo - (int) log10(index > 0 ? index : 1);
+		    for (int i = 0 ; i < nZeros ; i+=1)
+		    {
+			zeroPrefix += "0";
+
+		    }
+		    String vidIndex = zeroPrefix + index;
+
+		    currentVid.downloadVideo(dlFolder.toString(), vidIndex);
+		    currentVid.makeSub(dlFolder.toString(), vidIndex);
+
+		    index += 1;
 		}
-		String vidIndex = zeroPrefix + index;
-		currentVid.downloadVideo(dlFolder, vidIndex);
-		currentVid.makeSub(dlFolder, vidIndex);
-		
-		index += 1;
 	    }
 	    
-	} catch (FileNotFoundException ex)
+	}
+	catch (FileNotFoundException ex)
 	{
 	    Logger.getLogger(ExtractVideos.class.getName()).log(Level.SEVERE, null, ex);
 
