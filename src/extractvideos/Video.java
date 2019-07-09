@@ -31,9 +31,11 @@ public class Video
     
     private URL findLink (URL p_link) throws MalformedURLException, IOException
     {
+	//by default, we initialize the video as the passed link
 	URL videoLink = new URL(p_link.toString());
-	Pattern videoLinkPatttern = Pattern.compile("https://sakugabooru[.]com/data/[a-z0-9]*[.](m|w)(p|e)(4|bm)");
+	Pattern videoLinkPatttern = Pattern.compile("https://sakugabooru.com/data/[a-z0-9]*.(m|w)(p|e)(4|bm)");
 	
+	//if the passed url is hosted on sakugabooru, then it is not a direct link to the video. So, we download the page and find the video link in it.
 	if (Pattern.matches(p_link.getHost(), "www.sakugabooru.com"))
 	{
 	    BufferedInputStream booruPage = new BufferedInputStream(p_link.openStream());
