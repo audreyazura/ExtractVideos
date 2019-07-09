@@ -36,7 +36,7 @@ public class SakugaDAO
 	{	    
 	    String[] cutSplit = line.split("\t");
 	    
-	    if (!(cutSplit[3].equals("Lien FTP")))
+	    if (!(cutSplit[3].equals("Lien FTP")) && !(cutSplit.length == 1))
 	    {
 		URL link;
 		if (cutSplit[3].isEmpty())
