@@ -6,10 +6,10 @@
 package extractvideos;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import static java.lang.Math.log10;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,11 +25,11 @@ public class SakugaDAO
     
     /**
      * @param p_nVideos Approximate number of video entered in the base
-     * @param p_fileAddress the address of the sakuga database file
+     * @param p_fileBase the address of the sakuga database file
      */
-    public SakugaDAO(String p_fileAddress) throws FileNotFoundException, IOException, MalformedURLException
+    public SakugaDAO(File p_fileBase) throws FileNotFoundException, IOException, MalformedURLException
     {
-	BufferedReader sakugaRead = new BufferedReader(new FileReader(p_fileAddress));
+	BufferedReader sakugaRead = new BufferedReader(new FileReader(p_fileBase));
 	
 	String line;
 	while ((line = sakugaRead.readLine()) != null)
