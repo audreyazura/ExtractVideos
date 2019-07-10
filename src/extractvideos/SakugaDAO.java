@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Class creating the Array List containing all the information about the videos from the file enetered by the user
  * @author audreyazura
  */
 public class SakugaDAO
@@ -24,8 +24,13 @@ public class SakugaDAO
     private final List<Video> m_videoList = new ArrayList<>();
     
     /**
-     * @param p_nVideos Approximate number of video entered in the base
+     * Construct the video Array List from a file entered by the user.
+     * <p>
+     * /!\ The column in the file must be separated by tabulation. /!\
      * @param p_fileBase the address of the sakuga database file
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws MalformedURLException
      */
     public SakugaDAO(File p_fileBase) throws FileNotFoundException, IOException, MalformedURLException
     {
@@ -36,9 +41,11 @@ public class SakugaDAO
 	{	    
 	    String[] cutSplit = line.split("\t");
 	    
-	    if (!(cutSplit[3].equals("Lien FTP")) && !(cutSplit.length == 1))
+	    //if the line is not empty, and if it is not the line with the title of the column
+	    if (!(cutSplit.length == 1) && !(cutSplit[3].equals("Lien FTP")))
 	    {
 		URL link;
+		//if there is a direct link to the cut, we take it. Otherwise, we take the booru link
 		if (cutSplit[3].isEmpty())
 		{
 		    link = new URL("https://www.sakugabooru.com/post/show/" + cutSplit[2]);
@@ -55,6 +62,10 @@ public class SakugaDAO
 	sakugaRead.close();
     }
     
+    /**
+     * Send the Array List constructed from the user selected file
+     * @return the constructed Array List of Video
+     */
     public List<Video> getVideoList()
     {
 	return m_videoList;

@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Class coordinating the video extraction
  * @author audreyazura
  */
 public class ExtractVideos
@@ -26,6 +26,8 @@ public class ExtractVideos
     }
     
     /**
+     * Main function of the package, coordinating the video downloading from the
+     * database passed.
      * @param p_fileSakuga the address of the sakuga base
      */
     public static void extract(String p_fileSakuga)
@@ -35,20 +37,22 @@ public class ExtractVideos
 	try
 	{
 	    File sakugaCSV = new File(p_fileSakuga);
+	    //we want the video folder to be in the same folder as the sakuga base
 	    File dlFolder = new File(sakugaCSV.getParent() + "/Videos");
 	    
 	    if (dlFolder.mkdir() || dlFolder.isDirectory())
 	    {
 		videoList = new SakugaDAO(sakugaCSV).getVideoList();
 	    
-		int log10nVideo = (int) log10(videoList.size()-1);
-		int index = 0;
+		int log10ListSize = (int) log10(videoList.size()-1);
+		int index = 1;
 		for (Video currentVid: videoList)
 		{
 		    if (currentVid.toDownload())
 		    {
+			//to know the number of zero to put in the front of the index to get the video index, we compare the magnitude of the size of the list to the magnitude of the index
 			String zeroPrefix = new String();
-			int nZeros = log10nVideo - (int) log10(index > 0 ? index : 1);
+			int nZeros = log10ListSize - (int) log10(index);
 			for (int i = 0 ; i < nZeros ; i+=1)
 			{
 			    zeroPrefix += "0";
