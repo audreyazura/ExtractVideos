@@ -25,10 +25,12 @@ public class Video
 {
     private final String m_videoID;
     private final URL m_link;
+    private boolean m_exists;
     
     public Video (String p_authors, String p_anime, URL p_page) throws MalformedURLException, IOException
     {
 	m_videoID = p_authors + " (" + p_anime + ")";
+	m_exists = true;
 	m_link = findLink(p_page);
     }
     
@@ -69,6 +71,7 @@ public class Video
 	    } catch (FileNotFoundException notFoundErr)
 	    {
 		System.err.println("Warning: no file found for the cut " + m_videoID + " at link: " + p_link);
+		m_exists = false;
 	    }
 	}
 	
@@ -124,5 +127,10 @@ public class Video
 	subBuffer.flush();
 	subBuffer.close();
 
+    }
+    
+    public boolean toDownload ()
+    {
+	return m_exists;
     }
 }

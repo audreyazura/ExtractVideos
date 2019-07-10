@@ -45,19 +45,22 @@ public class ExtractVideos
 		int index = 0;
 		for (Video currentVid: videoList)
 		{
-		    String zeroPrefix = new String();
-		    int nZeros = log10nVideo - (int) log10(index > 0 ? index : 1);
-		    for (int i = 0 ; i < nZeros ; i+=1)
+		    if (currentVid.toDownload())
 		    {
-			zeroPrefix += "0";
+			String zeroPrefix = new String();
+			int nZeros = log10nVideo - (int) log10(index > 0 ? index : 1);
+			for (int i = 0 ; i < nZeros ; i+=1)
+			{
+			    zeroPrefix += "0";
 
+			}
+			String vidIndex = zeroPrefix + index;
+
+			currentVid.downloadVideo(dlFolder.toString(), vidIndex);
+			currentVid.makeSub(dlFolder.toString(), vidIndex);
+
+			index += 1;
 		    }
-		    String vidIndex = zeroPrefix + index;
-
-		    currentVid.downloadVideo(dlFolder.toString(), vidIndex);
-		    currentVid.makeSub(dlFolder.toString(), vidIndex);
-
-		    index += 1;
 		}
 	    }
 	    
