@@ -5,15 +5,17 @@
  */
 package extractvideos;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,19 +27,16 @@ public class Video
 {
     private final String m_videoID;
     private final URL m_link;
-    private boolean m_exists;
     
     public Video (String p_authors, String p_anime, URL p_page) throws MalformedURLException, IOException
     {
 	m_videoID = p_authors + " (" + p_anime + ")";
-	m_exists = true;
 	m_link = findLink(p_page);
     }
     
     private URL findLink (URL p_link) throws MalformedURLException, IOException
     {
-	//by default, we initialize the video as the passed link
-	URL videoLink = new URL(p_link.toString());
+	URL videoLink = null;
 	Pattern videoLinkPatttern = Pattern.compile("https://sakugabooru.com/data/[a-z0-9]*.(m|w)(p|e)(4|bm)");
 	
 	//if the passed url is hosted on sakugabooru, then it is not a direct link to the video. So, we download the page and find the video link in it.
@@ -45,22 +44,13 @@ public class Video
 	{
 	    try
 	    {
-		BufferedInputStream booruPage = new BufferedInputStream(p_link.openStream());
+		BufferedReader booruPage = new BufferedReader(new InputStreamReader(p_link.openStream()));
 	
-		int readByte;
+		String dataLine;
 		boolean foundAddress = false;
-		while (((readByte = booruPage.read()) != -1) && !(foundAddress))
+		while (((dataLine = booruPage.readLine()) != null) && !(foundAddress))
 		{
-		    char readChar = (char) readByte;
-		    String readLine = new String("");
-
-		    while (readChar != '\n')
-		    {
-			readLine += readChar;
-			readChar = (char) booruPage.read();
-		    }
-
-		    Matcher linkMatcher = videoLinkPatttern.matcher(readLine);
+		    Matcher linkMatcher = videoLinkPatttern.matcher(dataLine);
 		    if (foundAddress = linkMatcher.find())
 		    {
 			videoLink = new URL(linkMatcher.group());
@@ -68,11 +58,16 @@ public class Video
 		}
 
 		booruPage.close();
-	    } catch (FileNotFoundException notFoundErr)
+		
+	    } 
+	    catch (FileNotFoundException notFoundErr)
 	    {
 		System.err.println("Warning: no file found for the cut " + m_videoID + " at link: " + p_link);
-		m_exists = false;
 	    }
+	} 
+	else //the video link is passed as a ftp link
+	{
+	    videoLink = p_link;
 	}
 	
 	return videoLink;
@@ -80,37 +75,32 @@ public class Video
     
     public void downloadVideo (String p_Folder, String p_videoIndex) throws IOException
     {
-	try
+	
+	Matcher fileTypeMatcher = Pattern.compile("(m|w)(p|e)(4|bm)").matcher(m_link.getPath());
+
+	if (fileTypeMatcher.find())
 	{
-	    BufferedInputStream videoStream = new BufferedInputStream(m_link.openStream());
-	    Matcher fileTypeMatcher = Pattern.compile("(m|w)(p|e)(4|bm)").matcher(m_link.getPath());
+	    String fileLink = p_Folder + "/" + p_videoIndex + " - " + m_videoID + "." + fileTypeMatcher.group();
 
-	    if (fileTypeMatcher.find())
+	    System.out.println("Downloading " + fileLink);
+	    
+	    try
 	    {
-		BufferedOutputStream videoOut = new BufferedOutputStream(new FileOutputStream(p_Folder + "/" + p_videoIndex + " - " + m_videoID + "." + fileTypeMatcher.group()));
-		int readByte;
-
-		while((readByte = videoStream.read()) != -1)
+		InputStream videoStream = m_link.openStream();
+		Files.copy(videoStream, new File(fileLink).toPath());
+		videoStream.close();
+	    } 
+	    catch (FileNotFoundException notFoundErr)
+	    {
+		if (!(m_link.getHost().equalsIgnoreCase("www.sakugabooru.com")))
 		{
-		    videoOut.write(readByte);
+		    System.err.println("Warning: no file found for the cut " + m_videoID + " at link: " + m_link);
 		}
-
-		videoOut.flush();
-		videoOut.close();
-	    }
-	    else
-	    {
-		throw new IOException("Video type cannot be found in link:" + m_link.toString());
-	    }
-	    
-	    videoStream.close();
-	    
-	} catch (FileNotFoundException notFoundErr)
+	    }	
+	}
+	else
 	{
-	    if (!(m_link.getHost().equalsIgnoreCase("www.sakugabooru.com")))
-	    {
-		System.err.println("Warning: no file found for the cut " + m_videoID + " at link: " + m_link);
-	    }
+	    throw new IOException("Video type cannot be found in link:" + m_link.toString());
 	}
     }
     
@@ -131,6 +121,6 @@ public class Video
     
     public boolean toDownload ()
     {
-	return m_exists;
+	return (m_link != null);
     }
 }
