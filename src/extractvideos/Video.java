@@ -92,9 +92,10 @@ public class Video
 		booruPage.close();
 		
 	    } 
-	    catch (FileNotFoundException notFoundErr)
+	    catch (FileNotFoundException err)
 	    {
-		System.err.println("Warning: no file found for the cut " + m_videoID + " at link: " + p_link);
+//		ExtractVideos.cutInfoLogger.info("No file found for the cut " + m_videoID + " at link: " + p_link);
+		ExtractVideos.cutInfoLogger.info(p_link + "\tFichier non trouve : " + m_videoID);
 	    }
 	} 
 	else //the video link is passed as a non-booru link
@@ -108,7 +109,7 @@ public class Video
 	    }
 	    else
 	    {
-		System.err.println("Warning: no file found for the cut " + m_videoID + " at link: " + p_link);
+		ExtractVideos.cutInfoLogger.info(p_link + "\tFichier non trouve : " + m_videoID);
 	    }
 	}
 	
@@ -142,12 +143,13 @@ public class Video
 	    } 
 	    catch (FileNotFoundException notFoundErr)
 	    {
-		System.err.println("Warning: no file found for the cut " + m_videoID + " at link: " + m_link);
+		ExtractVideos.cutInfoLogger.info(m_link.toString() + "\tFichier non trouve : " + m_videoID);
 	    }	
 	}
 	else
 	{
-	    throw new IOException("Video type cannot be found in link:" + m_link.toString());
+	    ExtractVideos.cutInfoLogger.info(m_link.toString() + "\tL'extension de la video ne peut etre determine");
+//	    throw new IOException("Video type cannot be found in link:" + m_link.toString());
 	}
     }
     

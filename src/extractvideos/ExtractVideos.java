@@ -18,12 +18,13 @@
 package extractvideos;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import static java.lang.Math.log10;
+import java.util.Formatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.FileHandler;
 
 /**
  * Class coordinating the video extraction
@@ -32,6 +33,8 @@ import java.util.logging.Logger;
 public class ExtractVideos
 {
 
+    static Logger cutInfoLogger = Logger.getLogger(ExtractVideos.class.getName());
+    
     public static void main (String[] args)
     {
 	extract("/home/audreyazura/Documents/Nijikai/BaseSakuga.tsv");
@@ -49,10 +52,26 @@ public class ExtractVideos
 	try
 	{
 	    File sakugaCSV = new File(p_fileSakuga);
+	    String sakugaFolder = sakugaCSV.getParent();
 	    //we want the video folder to be in the same folder as the sakuga base
-	    File dlFolder = new File(sakugaCSV.getParent() + "/Videos");
+	    File dlFolder = new File(sakugaFolder + "/Videos");
 	    
-	    if (dlFolder.mkdir() || dlFolder.isDirectory())
+	    FileHandler missingCutHandler = new FileHandler(sakugaFolder + "/CutsManquant.log");
+	    missingCutHandler.setFormatter(new MissingCutFormatter());
+	    cutInfoLogger.addHandler(missingCutHandler);
+	    
+	    if (dlFolder.isDirectory())
+	    {
+		/*
+		*
+		* THINK TO AVERT THE USER WE RENAME THE OLD FOLDER AND DL IN VIDEO
+		*
+		*/
+		
+		dlFolder.renameTo(new File(dlFolder.getAbsolutePath() + "_OLD"));
+	    }
+	    
+	    if (dlFolder.mkdir())
 	    {
 		videoList = new SakugaDAO(sakugaCSV).getVideoList();
 	    
@@ -81,14 +100,10 @@ public class ExtractVideos
 	    }
 	    
 	}
-	catch (FileNotFoundException ex)
+	catch (SecurityException | IOException | IllegalArgumentException ex)
 	{
-	    Logger.getLogger(ExtractVideos.class.getName()).log(Level.SEVERE, null, ex);
+	    Logger.getLogger(ExtractVideos.class.getName()+"stopExecLogger").log(Level.SEVERE, null, ex);
 
-	}
-	catch (IOException ex)
-	{
-	    Logger.getLogger(ExtractVideos.class.getName()).log(Level.SEVERE, null, ex);
 	}	
     }
     
