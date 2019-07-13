@@ -20,11 +20,12 @@ package extractvideos;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.log10;
-import java.util.Formatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.FileHandler;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Class coordinating the video extraction
@@ -48,6 +49,7 @@ public class ExtractVideos
     public static void extract(String p_fileSakuga)
     {
 	List<Video> videoList;
+	SimpleFormatter defaultFormatter = new SimpleFormatter();
 	
 	try
 	{
@@ -56,8 +58,10 @@ public class ExtractVideos
 	    //we want the video folder to be in the same folder as the sakuga base
 	    File dlFolder = new File(sakugaFolder + "/Videos");
 	    
+	   System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tR %1td/%1$tm/%1$tY] %4$s : %5$s\n");
 	    FileHandler missingCutHandler = new FileHandler(sakugaFolder + "/CutsManquant.log");
-	    missingCutHandler.setFormatter(new MissingCutFormatter());
+	    SimpleFormatter missingCutFormatter = new SimpleFormatter();
+	    missingCutHandler.setFormatter(missingCutFormatter);
 	    cutInfoLogger.addHandler(missingCutHandler);
 	    
 	    if (dlFolder.isDirectory())
@@ -102,7 +106,11 @@ public class ExtractVideos
 	}
 	catch (SecurityException | IOException | IllegalArgumentException ex)
 	{
-	    Logger.getLogger(ExtractVideos.class.getName()+"stopExecLogger").log(Level.SEVERE, null, ex);
+	    Logger errLogger = Logger.getLogger(ExtractVideos.class.getName()+"stopExecLogger");
+	    ConsoleHandler errHandler = new ConsoleHandler();
+	    errHandler.setFormatter(defaultFormatter);
+	    errLogger.addHandler(errHandler);
+	    errLogger.log(Level.SEVERE, null, ex);
 
 	}	
     }
