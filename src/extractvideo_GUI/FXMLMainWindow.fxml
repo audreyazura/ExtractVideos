@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.Parent?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+
+<GridPane fx:controller="extractvideo_GUI.FXMLMainWindowController" xmlns:fx="http://javafx.com/fxml"
+          fx:id="maingrid">
+    
+    <columnConstraints>
+        <ColumnConstraints hgrow="always" minWidth="100.0" prefWidth="125.0"/>
+        <ColumnConstraints hgrow="always" minWidth="500.0" prefWidth="500.0"/>
+        <ColumnConstraints hgrow="always" minWidth="100.0" prefWidth="125.0"/>
+    </columnConstraints>
+    
+    <stylesheets>
+        <URL value="@WindowStyle.css" />
+    </stylesheets>
+    
+<!--    <TextFlow wrapText="true">
+        <Text fx:id="instructtxt" text=" Bienvenue dans l'extracteur de Sakuga ! Pour l'utiliser, veuillez suivre les étapes suivantes :
+                1) Téléchargez la base sakuga dans un fichiers de valeurs séparées par des tabulations (sur le Google Sheet, vous pouvez le faire en allant dans Fichier -> Télécharger au format -> Valeurs séparées par des tabulation (.tsv, feuille active). Le fichier résultant devrait être au format *.tsv
+                2) Cliquez sur le bouton &quot;Parcourir&quot; ci-dessous et sélectionnez le fichier tsv que vous venez de créer.
+                3) Cliquez sur le bouton &quot;Télécharger&quot;. L'extracteur va créer un dossier &quot;Vidéo&quot; dans le même dossier que le fichier tsv, dans lequel se trouveront toutes les vidéos ainsi que leurs sous-titres.
+                4) PROFIT!"/>
+    </TextFlow>-->
+    
+        
+    <VBox GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="3">
+        <GridPane fx:id="instructgrid">
+            <Label text="Bienvenue dans l'extracteur de Sakuga ! Pour l'utiliser, veuillez suivre les étapes suivantes :"
+                   GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Label text="1) Téléchargez la base sakuga dans un fichiers de valeurs séparées par des tabulations (sur le Google Sheet, vous pouvez le faire en allant dans Fichier -> Télécharger au format -> Valeurs séparées par des tabulation (.tsv, feuille active). Le fichier résultant devrait être au format *.tsv"
+                   GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Label text="2) Cliquez sur le bouton &quot;Parcourir&quot; ci-dessous et sélectionnez le fichier tsv que vous venez de créer."
+                   GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <Label text="3) Cliquez sur le bouton &quot;Télécharger&quot;. L'extracteur va créer un dossier &quot;Vidéo&quot; dans le même dossier que le fichier tsv, dans lequel se trouveront toutes les vidéos ainsi que leurs sous-titres."
+                   GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <Label text="4) PROFIT!"
+                   GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+        </GridPane>
+    </VBox>
+    
+    <Label text="Base sakuga :" alignment="center_right"
+           GridPane.columnIndex="0" GridPane.rowIndex="4"
+           GridPane.hgrow="always" GridPane.vgrow="always"
+           fx:id="textfieldlabel" />
+    
+    <TextField fx:id="addressfield"
+           GridPane.columnIndex="1" GridPane.rowIndex="4"
+           GridPane.hgrow="always" GridPane.vgrow="always"/>
+    
+    <HBox GridPane.columnIndex="2" GridPane.rowIndex="4" alignment="center"
+          GridPane.hgrow="always" GridPane.vgrow="always">
+        <Button text="Parcourir"
+                onAction="#browsingStart"/>
+    </HBox>
+    
+    <HBox alignment="center" GridPane.columnIndex="1" GridPane.rowIndex="8"
+          GridPane.hgrow="always" GridPane.vgrow="always">
+        <Button text="Télécharger"
+                onAction="#dlStart"
+                fx:id="dlbutton"/>
+    </HBox>
+    
+    <Text fx:id="devtxt"
+          GridPane.columnIndex="1" GridPane.rowIndex="6"
+          GridPane.hgrow="always" GridPane.vgrow="always"/>
+    
+    <gridLinesVisible>true</gridLinesVisible>
+    
+</GridPane>

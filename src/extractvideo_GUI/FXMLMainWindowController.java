@@ -17,32 +17,26 @@
  */
 package extractvideo_GUI;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.text.Font;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.text.Text;
 
 /**
+ * FXML Controller class
  *
  * @author audreyazura
  */
-public class ExtractVideo_GUI extends Application
+public class FXMLMainWindowController
 {
-    public static void startSakugaGUI(String[] args)
+    @FXML private Text devtxt;
+    
+    @FXML protected void browsingStart(ActionEvent event)
     {
-	Font.loadFont(ExtractVideo_GUI.class.getResource("URWPalladioL-Roma.ttf").toExternalForm(), 10);
-	launch(args);
+	devtxt.setText("This will open a browsing window!");
     }
     
-    @Override
-    public void start(Stage stage) throws Exception
+    @FXML protected void dlStart(ActionEvent event)
     {
-	Parent windowFxml = FXMLLoader.load(ExtractVideo_GUI.class.getResource("FXMLMainWindow.fxml"));
-	stage.setTitle("Sakuga Extracter");
-	Scene scene = new Scene(windowFxml, 800, 600);
-	stage.setScene(scene);
-	stage.show();
+	devtxt.setText("This start the download!");
     }
 }
