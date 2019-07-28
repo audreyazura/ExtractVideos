@@ -94,8 +94,8 @@ public class Video
 	    } 
 	    catch (FileNotFoundException err)
 	    {
-//		ExtractVideos.cutInfoLogger.info("No file found for the cut " + m_videoID + " at link: " + p_link);
-		ExtractVideos.cutInfoLogger.info(p_link + "\tFichier non trouve : " + m_videoID);
+//		ExtractVideos_DlAppli.cutInfoLogger.info("No file found for the cut " + m_videoID + " at link: " + p_link);
+		ExtractVideos_DlAppli.cutInfoLogger.info(p_link + "\tFichier non trouve : " + m_videoID);
 	    }
 	} 
 	else //the video link is passed as a non-booru link
@@ -109,7 +109,7 @@ public class Video
 	    }
 	    else
 	    {
-		ExtractVideos.cutInfoLogger.info(p_link + "\tFichier non trouve : " + m_videoID);
+		ExtractVideos_DlAppli.cutInfoLogger.info(p_link + "\tFichier non trouve : " + m_videoID);
 	    }
 	}
 	
@@ -143,12 +143,12 @@ public class Video
 	    } 
 	    catch (FileNotFoundException notFoundErr)
 	    {
-		ExtractVideos.cutInfoLogger.info(m_link.toString() + "\tFichier non trouve : " + m_videoID);
+		ExtractVideos_DlAppli.cutInfoLogger.info(m_link.toString() + "\tFichier non trouve : " + m_videoID);
 	    }	
 	}
 	else
 	{
-	    ExtractVideos.cutInfoLogger.info(m_link.toString() + "\tL'extension de la video ne peut etre determine");
+	    ExtractVideos_DlAppli.cutInfoLogger.info(m_link.toString() + "\tL'extension de la video ne peut etre determine");
 //	    throw new IOException("Video type cannot be found in link:" + m_link.toString());
 	}
     }

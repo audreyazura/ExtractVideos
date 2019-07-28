@@ -17,7 +17,6 @@
  */
 package extractvideo_GUI;
 
-import extractvideos_dlappli.ExtractVideos;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,7 +29,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -48,7 +46,7 @@ public class ExtractVideo_GUI extends Application
 //	{
 //	    System.out.println(font);
 //	}
-	
+	Font.loadFont(ExtractVideo_GUI.class.getResource("URWPalladioL-Roma.ttf").toExternalForm(), 10);
 	launch(args);
     }
     
@@ -56,27 +54,30 @@ public class ExtractVideo_GUI extends Application
     public void start(Stage stage)
     {
 	stage.setTitle("Sakuga Extracter");
-	stage.show();
 	
-        GridPane mainGrid = new GridPane();
-	mainGrid.setAlignment(Pos.CENTER);
+        int padSize = 25;
+	GridPane mainGrid = new GridPane();
+	mainGrid.setAlignment(Pos.TOP_CENTER);
 	mainGrid.setHgap(10);
-	mainGrid.setVgap(20);
-	mainGrid.setPadding(new Insets(25));
+	mainGrid.setVgap(10);
+	mainGrid.setPadding(new Insets(padSize));
 	
-	Text instructions = new Text("Bienvenue dans l'extracteur de Sakuga ! Pour l'utiliser, veuillez suivre les étapes suivantes :\n1) Télécharger la base sakuga dans un fichiers de valeurs séparées par des tabulations (sur le Google Sheet, vous pouvez le faire en allant dans Fichier -> Télécharger au format -> Valeurs séparées par des tabulation (.tsv, feuille active). Le fichier résultant devrait être au format *.tsv\n2) Cliquer sur le bouton \"Parcourir\" ci-dessous et sélectionnez le fichier tsv que vous venez de créer.\n3) Cliquez sur le bouton \"Télécharger\". L'extracteur va créer un dossier \"Vidéo\" dans le même dossier que le fichier tsv, dans lequel se trouveront toutes les vidéos ainsi que leurs sous-titres.\n4) PROFIT!");
-	instructions.setFont(Font.loadFont(ExtractVideo_GUI.class.getResource("URWPalladioL-Roma.ttf").toExternalForm(), 15));
-	mainGrid.add(instructions, 0, 0, 2, 1);
+	Scene scene = new Scene(mainGrid, 800, 600);
 	
-	Label fieldName = new Label("Base sakuga:");
-	fieldName.setFont(Font.loadFont(ExtractVideo_GUI.class.getResource("URWPalladioL-Roma.ttf").toExternalForm(), 15));
-	mainGrid.add(fieldName, 0, 1);
+	Text instructions = new Text("Bienvenue dans l'extracteur de Sakuga ! Pour l'utiliser, veuillez suivre les étapes suivantes :\n1) Téléchargez la base sakuga dans un fichiers de valeurs séparées par des tabulations (sur le Google Sheet, vous pouvez le faire en allant dans Fichier -> Télécharger au format -> Valeurs séparées par des tabulation (.tsv, feuille active). Le fichier résultant devrait être au format *.tsv\n2) Cliquez sur le bouton \"Parcourir\" ci-dessous et sélectionnez le fichier tsv que vous venez de créer.\n3) Cliquez sur le bouton \"Télécharger\". L'extracteur va créer un dossier \"Vidéo\" dans le même dossier que le fichier tsv, dans lequel se trouveront toutes les vidéos ainsi que leurs sous-titres.\n4) PROFIT!");
+	instructions.setId("instructtxt");
+	instructions.setWrappingWidth(scene.getWidth()-padSize*2);
+	mainGrid.add(instructions, 0, 3, 3, 1);
+	
+	mainGrid.add(new Label("Base sakuga:"), 0, 5);
 	
 	TextField addressField = new TextField();
-	mainGrid.add(addressField, 1, 1);
+	addressField.setMinWidth(scene.getWidth()-250);
+	mainGrid.add(addressField, 1, 5);
 	
 	final Text buttonClicked = new Text();
-	mainGrid.add(buttonClicked, 1, 3);
+	buttonClicked.setId("devtxt");
+	mainGrid.add(buttonClicked, 1, 7);
 	
 	Button browse = new Button("Parcourir");
 	browse.setOnAction(new EventHandler<ActionEvent>()
@@ -84,31 +85,31 @@ public class ExtractVideo_GUI extends Application
 	    @Override
 	    public void handle(ActionEvent ActionEvent)
 	    {
-		buttonClicked.setFill(Color.FIREBRICK);
 		buttonClicked.setText("This will open a browsing window!");
 	    }
 	});
 	HBox browseBox = new HBox(10);
 	browseBox.getChildren().add(browse);
-	mainGrid.add(browseBox, 2, 1);
+	mainGrid.add(browseBox, 2, 5);
 	
 	Button startDl = new Button("Télécharger");
+	startDl.setId("dlbutton");
 	startDl.setOnAction(new EventHandler<ActionEvent>()
 	{
 	    @Override
 	    public void handle(ActionEvent ActionEvent)
 	    {
-		buttonClicked.setFill(Color.FIREBRICK);
 		buttonClicked.setText("This will start the download!");
-//		ExtractVideos.extract("/home/audreyazura/Documents/Nijikai/BaseSakuga.tsv");
+//		ExtractVideos_DlAppli.extract("/home/audreyazura/Documents/Nijikai/BaseSakuga.tsv");
 	    }
 	});
 	HBox dlBox = new HBox();
 	dlBox.setAlignment(Pos.BOTTOM_RIGHT);
 	dlBox.getChildren().add(startDl);
-	mainGrid.add(dlBox, 3, 5);
-	
-        Scene scene = new Scene(mainGrid, 640, 480);
-        stage.setScene(scene);
+	mainGrid.add(dlBox, 1, 9);
+
+	scene.getStylesheets().add(ExtractVideo_GUI.class.getResource("WindowStyle.css").toExternalForm());
+	stage.setScene(scene);
+	stage.show();
     }
 }

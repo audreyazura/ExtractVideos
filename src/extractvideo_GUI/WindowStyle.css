@@ -1,0 +1,66 @@
+/*
+Copyright (C) 2019 audreyazura
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+*/
+/* 
+    Created on : 28 Jul 2019, 18:29:30
+    Author     : audreyazura
+*/
+
+.root
+{
+    -fx-background-image: url("ExtractorBG.png")
+}
+
+.label
+{
+    -fx-font-family: URWPalladioL;
+    -fx-font-size: 15px;
+    -fx-text-fill: #FFFFFF;
+}
+
+#instructtxt
+{
+    -fx-font-family: URWPalladioL;
+    -fx-text-alignment: justify;
+    -fx-font-size: 18px;
+    -fx-fill: #FFFFFF;
+}
+
+#devtxt
+{
+    -fx-font-family: URWPalladioL;
+    -fx-text-alignment: right;
+    -fx-font-size: 20px;
+    -fx-fill: firebrick;
+}
+
+.button
+{
+    -fx-background-color: linear-gradient(#FFFFFF, #002535);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,50,0.8) , 10, 0.0 , 0 , 1 );
+}
+
+.button:pressed
+{
+    -fx-background-color: linear-gradient(#002535, #FFFFFF);
+}
+
+#dlbutton
+{
+    -fx-font-size: 30px;
+}
+

@@ -31,10 +31,10 @@ import java.util.logging.SimpleFormatter;
  * Class coordinating the video extraction
  * @author audreyazura
  */
-public class ExtractVideos
+public class ExtractVideos_DlAppli
 {
 
-    static Logger cutInfoLogger = Logger.getLogger(ExtractVideos.class.getName());
+    static Logger cutInfoLogger = Logger.getLogger(ExtractVideos_DlAppli.class.getName());
     
     public static void main (String[] args)
     {
@@ -106,7 +106,7 @@ public class ExtractVideos
 	}
 	catch (SecurityException | IOException | IllegalArgumentException ex)
 	{
-	    Logger errLogger = Logger.getLogger(ExtractVideos.class.getName()+"stopExecLogger");
+	    Logger errLogger = Logger.getLogger(ExtractVideos_DlAppli.class.getName()+"stopExecLogger");
 	    ConsoleHandler errHandler = new ConsoleHandler();
 	    errHandler.setFormatter(defaultFormatter);
 	    errLogger.addHandler(errHandler);
