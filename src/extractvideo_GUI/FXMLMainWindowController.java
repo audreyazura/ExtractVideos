@@ -38,7 +38,7 @@ public class FXMLMainWindowController
 {
     @FXML private TextField addressfield;
     
-    @FXML void browsingStart(ActionEvent event) throws IOException
+    @FXML void browsingStart(ActionEvent event)
     {
 	Stage browseStage = new Stage();
 	FileChooser browser = new FileChooser();
@@ -53,7 +53,15 @@ public class FXMLMainWindowController
 	}
 	catch (NullPointerException ex)
 	{
-	    ExtractVideo_GUI.popupInfo("Entrez l'adresse du fichier.");
+	    try
+	    {
+		ExtractVideo_GUI.popupInfo("Entrez l'adresse du fichier.");
+	    }
+	    catch (IOException ex1)
+	    {
+		Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, ex1);
+		((Stage) addressfield.getScene().getWindow()).close();
+	    }
 	}
 
 	addressfield.setText(fileAdress);
@@ -76,6 +84,7 @@ public class FXMLMainWindowController
 		catch (IOException ex1)
 		{
 		    Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, ex1);
+		    ((Stage) addressfield.getScene().getWindow()).close();
 		}
 	    }
 	}).start();
