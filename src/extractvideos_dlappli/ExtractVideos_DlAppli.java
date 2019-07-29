@@ -111,7 +111,6 @@ public class ExtractVideos_DlAppli
 	    errHandler.setFormatter(defaultFormatter);
 	    errLogger.addHandler(errHandler);
 	    errLogger.log(Level.SEVERE, null, ex);
-
 	}	
     }
     
