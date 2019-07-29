@@ -58,7 +58,7 @@ public class ExtractVideos_DlAppli
 	    //we want the video folder to be in the same folder as the sakuga base
 	    File dlFolder = new File(sakugaFolder + "/Videos");
 	    
-	   System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tR %1td/%1$tm/%1$tY] %4$s : %5$s\n");
+	    System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tR %1td/%1$tm/%1$tY] %4$s : %5$s\n");
 	    FileHandler missingCutHandler = new FileHandler(sakugaFolder + "/CutsManquant.log");
 	    SimpleFormatter missingCutFormatter = new SimpleFormatter();
 	    missingCutHandler.setFormatter(missingCutFormatter);
