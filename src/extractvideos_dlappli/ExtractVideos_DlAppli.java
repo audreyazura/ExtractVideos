@@ -20,6 +20,7 @@ package extractvideos_dlappli;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.log10;
+import java.nio.file.NoSuchFileException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +37,7 @@ public class ExtractVideos_DlAppli
 
     static Logger cutInfoLogger = Logger.getLogger(ExtractVideos_DlAppli.class.getName());
     
-    public static void main (String[] args)
+    public static void main (String[] args) throws NoSuchFileException
     {
 	extract("/home/audreyazura/Documents/Nijikai/BaseSakuga.tsv");
     }
@@ -45,8 +46,9 @@ public class ExtractVideos_DlAppli
      * Main function of the package, coordinating the video downloading from the
      * database passed.
      * @param p_fileSakuga the address of the sakuga base
+     * @throws java.nio.file.NoSuchFileException
      */
-    public static void extract(String p_fileSakuga)
+    public static void extract(String p_fileSakuga) throws NoSuchFileException
     {
 	List<Video> videoList;
 	SimpleFormatter defaultFormatter = new SimpleFormatter();

@@ -70,7 +70,7 @@
     
     <HBox alignment="center" GridPane.columnIndex="1" GridPane.rowIndex="8"
           GridPane.hgrow="always" GridPane.vgrow="always">
-        <Button text="Télécharger"
+        <Button text="Télécharger" defaultButton="true"
                 onAction="#dlStart"
                 fx:id="dlbutton"/>
     </HBox>

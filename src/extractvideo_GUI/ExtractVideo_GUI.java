@@ -17,6 +17,8 @@
  */
 package extractvideo_GUI;
 
+import java.io.IOException;
+import java.lang.ModuleLayer.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,12 +39,25 @@ public class ExtractVideo_GUI extends Application
     }
     
     @Override
-    public void start(Stage stage) throws Exception
+    public void start(Stage stage) throws IOException
     {
 	Parent windowFxml = FXMLLoader.load(ExtractVideo_GUI.class.getResource("FXMLMainWindow.fxml"));
 	stage.setTitle("Sakuga Extracter");
-	Scene scene = new Scene(windowFxml, 800, 600);
-	stage.setScene(scene);
+	stage.setScene(new Scene(windowFxml, 800, 600));
 	stage.show();
+    }
+    
+    static void popupInfo(String infoMessage) throws IOException
+    {
+	Stage infoStage = new Stage();
+	FXMLLoader fxmlLoader = new FXMLLoader(ExtractVideo_GUI.class.getResource("FXMLPopupInfo.fxml"));
+	Parent infoFxml = fxmlLoader.load();
+	FXMLPopupInfoController popupController = fxmlLoader.getController();
+	
+	popupController.setPopupInfo(infoMessage);
+	
+	infoStage.requestFocus();
+	infoStage.setScene(new Scene(infoFxml, 200, 100));
+	infoStage.show();
     }
 }

@@ -22,6 +22,8 @@ import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
 import extractvideos_dlappli.ExtractVideos_DlAppli;
+import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.TextField;
@@ -36,7 +38,7 @@ public class FXMLMainWindowController
 {
     @FXML private TextField addressfield;
     
-    @FXML void browsingStart(ActionEvent event)
+    @FXML void browsingStart(ActionEvent event) throws IOException
     {
 	Stage browseStage = new Stage();
 	FileChooser browser = new FileChooser();
@@ -51,7 +53,7 @@ public class FXMLMainWindowController
 	}
 	catch (NullPointerException ex)
 	{
-	    Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, "No File selected");
+	    ExtractVideo_GUI.popupInfo("Entrez l'adresse du fichier.");
 	}
 
 	addressfield.setText(fileAdress);
@@ -59,7 +61,23 @@ public class FXMLMainWindowController
     
     @FXML void dlStart(ActionEvent event)
     {
-	new Thread(() -> ExtractVideos_DlAppli.extract(addressfield.getText())).start();
-	
+	new Thread(() ->
+	{
+	    try
+	    {
+	        ExtractVideos_DlAppli.extract(addressfield.getText());
+	    }
+	    catch (NoSuchFileException ex)
+	    {
+		try
+		{
+		    ExtractVideo_GUI.popupInfo("Le fichier ne peut pas être trouvé.");
+		} 
+		catch (IOException ex1)
+		{
+		    Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, ex1);
+		}
+	    }
+	}).start();
     }
 }
