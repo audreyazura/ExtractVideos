@@ -79,6 +79,6 @@
           GridPane.columnIndex="1" GridPane.rowIndex="6"
           GridPane.hgrow="always" GridPane.vgrow="always"/>
     
-    <gridLinesVisible>true</gridLinesVisible>
+<!--    <gridLinesVisible>true</gridLinesVisible>-->
     
 </GridPane>

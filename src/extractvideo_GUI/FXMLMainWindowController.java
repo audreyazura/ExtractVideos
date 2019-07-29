@@ -19,7 +19,13 @@ package extractvideo_GUI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import extractvideos_dlappli.ExtractVideos_DlAppli;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 
 /**
  * FXML Controller class
@@ -28,15 +34,32 @@ import javafx.scene.text.Text;
  */
 public class FXMLMainWindowController
 {
-    @FXML private Text devtxt;
+    @FXML private TextField addressfield;
     
-    @FXML protected void browsingStart(ActionEvent event)
+    @FXML void browsingStart(ActionEvent event)
     {
-	devtxt.setText("This will open a browsing window!");
+	Stage browseStage = new Stage();
+	FileChooser browser = new FileChooser();
+	
+	browser.setTitle("Choisissez la base sakuga");
+	browser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Tabulation Separated Value (*.tsv)", "*.tsv"), new FileChooser.ExtensionFilter("All files (*.*)", "*.*"));
+	
+	String fileAdress = "";
+	try
+	{
+	    fileAdress = browser.showOpenDialog(browseStage).getAbsolutePath();
+	}
+	catch (NullPointerException ex)
+	{
+	    Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, "No File selected");
+	}
+
+	addressfield.setText(fileAdress);
     }
     
-    @FXML protected void dlStart(ActionEvent event)
+    @FXML void dlStart(ActionEvent event)
     {
-	devtxt.setText("This start the download!");
+	new Thread(() -> ExtractVideos_DlAppli.extract(addressfield.getText())).start();
+	
     }
 }
