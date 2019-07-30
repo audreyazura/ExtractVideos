@@ -20,7 +20,7 @@ package extractvideo_GUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.text.Text;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 /**
@@ -30,7 +30,7 @@ import javafx.stage.Stage;
  */
 public class FXMLPopupInfoController
 {
-    @FXML private Text popuptext;
+    @FXML private Label popuptext;
     @FXML private Button okbutton;
     
     void setPopupInfo(String message)

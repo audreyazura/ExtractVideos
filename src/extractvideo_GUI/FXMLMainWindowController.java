@@ -22,10 +22,7 @@ import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
 import extractvideos_dlappli.ExtractVideos_DlAppli;
-import java.io.IOException;
 import java.nio.file.NoSuchFileException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
@@ -40,7 +37,6 @@ public class FXMLMainWindowController
     
     @FXML void browsingStart(ActionEvent event)
     {
-	Stage browseStage = new Stage();
 	FileChooser browser = new FileChooser();
 	
 	browser.setTitle("Choisissez la base sakuga");
@@ -49,19 +45,11 @@ public class FXMLMainWindowController
 	String fileAdress = "";
 	try
 	{
-	    fileAdress = browser.showOpenDialog(browseStage).getAbsolutePath();
+	    fileAdress = browser.showOpenDialog(ExtractVideos_GUI.mainStage).getAbsolutePath();
 	}
 	catch (NullPointerException ex)
 	{
-	    try
-	    {
-		ExtractVideo_GUI.popupInfo("Entrez l'adresse du fichier.");
-	    }
-	    catch (IOException ex1)
-	    {
-		Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, ex1);
-		((Stage) addressfield.getScene().getWindow()).close();
-	    }
+	   ExtractVideos_GUI.popupInfo("Entrez l'adresse du fichier.");
 	}
 
 	addressfield.setText(fileAdress);
@@ -77,15 +65,7 @@ public class FXMLMainWindowController
 	    }
 	    catch (NoSuchFileException ex)
 	    {
-		try
-		{
-		    ExtractVideo_GUI.popupInfo("Le fichier ne peut pas être trouvé.");
-		} 
-		catch (IOException ex1)
-		{
-		    Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, ex1);
-		    ((Stage) addressfield.getScene().getWindow()).close();
-		}
+		 ExtractVideos_GUI.popupInfo("Le fichier ne peut pas être trouvé.");
 	    }
 	}).start();
     }

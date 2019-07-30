@@ -28,6 +28,9 @@ import java.util.logging.FileHandler;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.SimpleFormatter;
 
+import extractvideo_GUI.ExtractVideos_GUI;
+import javafx.application.Platform;
+
 /**
  * Class coordinating the video extraction
  * @author audreyazura
@@ -36,6 +39,7 @@ public class ExtractVideos_DlAppli
 {
 
     static Logger cutInfoLogger = Logger.getLogger(ExtractVideos_DlAppli.class.getName());
+    static boolean stopped = false;
     
     public static void main (String[] args) throws NoSuchFileException
     {
@@ -46,9 +50,10 @@ public class ExtractVideos_DlAppli
      * Main function of the package, coordinating the video downloading from the
      * database passed.
      * @param p_fileSakuga the address of the sakuga base
+     * @return boolean did the execution went smoothly
      * @throws java.nio.file.NoSuchFileException
      */
-    public static void extract(String p_fileSakuga) throws NoSuchFileException
+    public static boolean extract(String p_fileSakuga) throws NoSuchFileException
     {
 	List<Video> videoList;
 	SimpleFormatter defaultFormatter = new SimpleFormatter();
@@ -68,12 +73,10 @@ public class ExtractVideos_DlAppli
 	    
 	    if (dlFolder.isDirectory())
 	    {
-		/*
-		*
-		* THINK TO AVERT THE USER WE RENAME THE OLD FOLDER AND DL IN VIDEO
-		*
-		*/
-		
+		Platform.runLater(() ->
+		{
+		    ExtractVideos_GUI.popupInfo("Un dossier \"Video\" a été trouvé dans le dossier de la base sakuga. Il va être renommé en Video_OLD.");
+		}); 
 		dlFolder.renameTo(new File(dlFolder.getAbsolutePath() + "_OLD"));
 	    }
 	    
@@ -83,24 +86,27 @@ public class ExtractVideos_DlAppli
 	    
 		int log10ListSize = (int) log10(videoList.size()-1);
 		int index = 1;
-		for (Video currentVid: videoList)
+		if(!stopped)
 		{
-		    if (currentVid.toDownload())
+		    for (Video currentVid: videoList)
 		    {
-			//to know the number of zero to put in the front of the index to get the video index, we compare the magnitude of the size of the list to the magnitude of the index
-			String zeroPrefix = new String();
-			int nZeros = log10ListSize - (int) log10(index);
-			for (int i = 0 ; i < nZeros ; i+=1)
+			if (currentVid.toDownload())
 			{
-			    zeroPrefix += "0";
+			    //to know the number of zero to put in the front of the index to get the video index, we compare the magnitude of the size of the list to the magnitude of the index
+			    String zeroPrefix = new String();
+			    int nZeros = log10ListSize - (int) log10(index);
+			    for (int i = 0 ; i < nZeros ; i+=1)
+			    {
+				zeroPrefix += "0";
 
+			    }
+			    String vidIndex = zeroPrefix + index;
+
+			    currentVid.downloadVideo(dlFolder.toString(), vidIndex);
+			    currentVid.makeSub(dlFolder.toString(), vidIndex);
+
+			    index += 1;
 			}
-			String vidIndex = zeroPrefix + index;
-
-			currentVid.downloadVideo(dlFolder.toString(), vidIndex);
-			currentVid.makeSub(dlFolder.toString(), vidIndex);
-
-			index += 1;
 		    }
 		}
 	    }
@@ -113,7 +119,9 @@ public class ExtractVideos_DlAppli
 	    errHandler.setFormatter(defaultFormatter);
 	    errLogger.addHandler(errHandler);
 	    errLogger.log(Level.SEVERE, null, ex);
-	}	
+	}
+	
+	return !stopped;
     }
     
 }

@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.Text?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.ColumnConstraints?>
 
 <GridPane fx:controller="extractvideo_GUI.FXMLPopupInfoController" xmlns:fx="http://javafx.com/fxml">
     
-    <Text textAlignment="center"
+    <rowConstraints>
+        <RowConstraints minHeight="100" />
+        <RowConstraints minHeight="100" />
+    </rowConstraints>
+    
+    <stylesheets>
+        <URL value="@WindowStyle.css" />
+    </stylesheets>
+    
+    <Label textAlignment="center"
           GridPane.columnIndex="0" GridPane.rowIndex="0"
           fx:id="popuptext"/>
     
     <HBox alignment="center" GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <Button text="OK" fx:id="okbutton"
+        <Button text="OK" fx:id="okbutton" defaultButton="true"
                 onAction="#closePopup"/>
     </HBox>
 

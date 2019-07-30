@@ -25,6 +25,6 @@ public class Launcher
 {
     public static void main(String[] args)
     {
-        ExtractVideo_GUI.startSakugaGUI(args);
+        ExtractVideos_GUI.startSakugaGUI(args);
     }
 }

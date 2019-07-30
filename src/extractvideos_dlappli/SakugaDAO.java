@@ -27,6 +27,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import extractvideo_GUI.ExtractVideos_GUI;
+import javafx.application.Platform;
+
 /**
  * Class creating the Array List containing all the information about the videos from the file enetered by the user
  * @author audreyazura
@@ -49,10 +52,19 @@ public class SakugaDAO
 	BufferedReader sakugaRead = new BufferedReader(new FileReader(p_fileBase));
 	
 	String line;
-	while ((line = sakugaRead.readLine()) != null)
+	while (((line = sakugaRead.readLine()) != null) && !ExtractVideos_DlAppli.stopped)
 	{	    
 	    String[] cutSplit = line.split("\t");
 	    
+	    if(cutSplit.length != 5)
+	    {
+		Platform.runLater(() ->
+		{
+		    ExtractVideos_GUI.popupInfo("Le fichier de base ne peut pas être lu correctement.");
+		});
+		ExtractVideos_DlAppli.stopped = true;
+	    }
+
 	    //if the line is not empty, and if it is not the line with the title of the column
 	    if (!(cutSplit.length == 1) && !(cutSplit[3].equals("Lien FTP")))
 	    {
