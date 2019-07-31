@@ -60,7 +60,7 @@ public class ExtractVideos_GUI extends Application
 	}
     }
     
-    public static void popupInfo(String infoMessage)
+    static void popupInfo(String infoMessage)
     {
 	
 	Stage infoStage = new Stage();
@@ -84,5 +84,50 @@ public class ExtractVideos_GUI extends Application
 	{
 	    Logger.getLogger(ExtractVideos_GUI.class.getName()).log(Level.SEVERE, null, ex);
 	}
+    }
+    
+    static void popupCritical(String infoMessage)
+    {
+	
+	Stage popupStage = new Stage();
+	FXMLLoader fxmlLoader = new FXMLLoader(ExtractVideos_GUI.class.getResource("FXMLPopupCritical.fxml"));
+	
+	try
+	{
+	    Parent infoFxml = fxmlLoader.load();
+	    FXMLPopupInfoController popupController = fxmlLoader.getController();
+	    
+	    popupController.setPopupInfo(infoMessage);
+	    
+	    popupStage.initOwner(mainStage);
+	    popupStage.initModality(Modality.APPLICATION_MODAL);
+	    popupStage.setTitle("Error!");
+	    popupStage.setScene(new Scene(infoFxml, 400, 200));
+	    popupStage.showAndWait();
+	    popupStage.requestFocus();
+	}
+	catch (IOException ex)
+	{
+	    Logger.getLogger(ExtractVideos_GUI.class.getName()).log(Level.SEVERE, null, ex);
+	}
+    }
+    
+    static void initiateDlScene()
+    {
+	try
+	{
+	    Parent dlFxml = FXMLLoader.load(ExtractVideos_GUI.class.getResource("FXMLDlInfoWindow.fxml"));
+	    mainStage.setScene(new Scene(dlFxml, 800, 600));
+	    mainStage.show();
+	}
+	catch (IOException ex)
+	{
+    	    Logger.getLogger(ExtractVideos_GUI.class.getName()).log(Level.SEVERE, null, ex);
+	}
+    }
+    
+    static public void printProgress(String message, double progress)
+    {
+	FXMLDlInfoWindowController.updateProgress(message, progress);
     }
 }
