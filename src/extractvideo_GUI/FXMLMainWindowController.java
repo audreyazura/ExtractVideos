@@ -59,13 +59,15 @@ public class FXMLMainWindowController
     
     @FXML void dlStart(ActionEvent event)
     {
-//	Thread dlThread = new Thread()
+//	Thread.UncaughtExceptionHandler h = (Thread th, Throwable ex) -> 
 //	{
-//	    public void run()
-//	    {
-//		ExtractVideos_DlAppli.extract(addressfield.getText());
-//	    }
+//	    System.out.println("Uncaught exception: " + ex.getClass());
 //	};
+//	
+//	Thread dlThread = new Thread(() ->
+//	{
+//	    ExtractVideos_DlAppli.extract(addressfield.getText());
+//	});
 
 	Thread dlThread = new Thread(() ->
 	{
@@ -96,12 +98,7 @@ public class FXMLMainWindowController
 	    }
 	});
 	
-	Thread.UncaughtExceptionHandler h = (Thread th, Throwable ex) -> 
-	{
-	    System.out.println("Uncaught exception: " + ex.getClass());
-	};
-	
-	dlThread.setUncaughtExceptionHandler(h);
+//	dlThread.setUncaughtExceptionHandler(h);
 	dlThread.start();
     }
 }
