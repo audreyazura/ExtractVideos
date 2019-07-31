@@ -17,6 +17,7 @@
  */
 package extractvideos_dlappli;
 
+import extractvideo_GUI.ExtractVideos_GUI;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,6 +32,7 @@ import java.util.logging.SimpleFormatter;
 
 import java.nio.file.FileAlreadyExistsException;
 import java.util.zip.DataFormatException;
+import javafx.application.Platform;
 
 /**
  * Class coordinating the video extraction
@@ -42,7 +44,7 @@ public class ExtractVideos_DlAppli
     static Logger cutInfoLogger = Logger.getLogger(ExtractVideos_DlAppli.class.getName());
     static boolean stopped = false;
     
-    public static void main (String[] args) throws NoSuchFileException, FileAlreadyExistsException, DataFormatException
+    public static void main (String[] args) throws IOException, DataFormatException
     {
 	extract("/home/audreyazura/Documents/Nijikai/BaseSakuga.tsv");
     }
@@ -51,12 +53,11 @@ public class ExtractVideos_DlAppli
      * Main function of the package, coordinating the video downloading from the
      * database passed.
      * @param p_fileSakuga the address of the sakuga base
-     * @return boolean did the execution went smoothly
      * @throws java.nio.file.NoSuchFileException
      * @throws java.nio.file.FileAlreadyExistsException
      * @throws java.util.zip.DataFormatException
      */
-    public static boolean extract(String p_fileSakuga) throws NoSuchFileException, FileAlreadyExistsException, DataFormatException
+    public static void extract(String p_fileSakuga) throws IOException, DataFormatException
     {
 	List<Video> videoList;
 	SimpleFormatter defaultFormatter = new SimpleFormatter();
@@ -102,17 +103,21 @@ public class ExtractVideos_DlAppli
 			    }
 			    String vidIndex = zeroPrefix + index;
 
+//			    Platform.runLater(new toUpdateGUI("Downloading "+vidIndex+" - "+currentVid.getVideoName(), ((double) index)/((double) videoList.size()-1)));
+			    
 			    currentVid.downloadVideo(dlFolder.toString(), vidIndex);
 			    currentVid.makeSub(dlFolder.toString(), vidIndex);
 
 			    index += 1;
+			    
+//			    Platform.runLater(new toUpdateGUI("Video "+vidIndex+" - "+currentVid.getVideoName()+" downloaded", ((double) index)/((double) videoList.size()-1)));
 			}
 		    }
 		}
 	    }
 	    
 	}
-	catch (SecurityException | IOException | IllegalArgumentException ex)
+	catch (SecurityException | IllegalArgumentException ex)
 	{
 	    Logger errLogger = Logger.getLogger(ExtractVideos_DlAppli.class.getName()+"stopExecLogger");
 	    ConsoleHandler errHandler = new ConsoleHandler();
@@ -120,8 +125,24 @@ public class ExtractVideos_DlAppli
 	    errLogger.addHandler(errHandler);
 	    errLogger.log(Level.SEVERE, null, ex);
 	}
-	
-	return !stopped;
     }
+    
+//    static class toUpdateGUI implements Runnable
+//    {
+//	String m_message;
+//	Double m_progress;
+//
+//	private toUpdateGUI (String p_message, double p_progress)
+//	{
+//	    m_message = p_message;
+//	    m_progress = p_progress;
+//	}
+//	
+//	@Override
+//	public void run()
+//	{
+//	    ExtractVideos_GUI.printProgress(m_message, m_progress);
+//	}
+//    }
     
 }

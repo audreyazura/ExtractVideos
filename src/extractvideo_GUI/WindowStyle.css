@@ -27,6 +27,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*    -fx-background-color: #292929;*/
 }
 
+#vboxdl
+{
+    -fx-padding: 25px;
+    -fx-spacing: 100px;
+    -fx-alignment: top-left;
+    -fx-fill-width: true;
+    -fx-background-color: #292929;
+}
+
+#insidebox
+{
+    -fx-padding: 25px;
+    -fx-spacing: 10px;
+    -fx-alignment: top-left;
+    -fx-fill-width: true;
+    -fx-background-color: #292929;
+}
+
 #maingrid
 {
     -fx-background-image: url("ExtractorBG.png");
@@ -82,6 +100,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {
     -fx-spacing: 10px;
     -fx-alignment: CENTER;
+}
+
+.textarea
+{
+    -fx-background-color: #FFFFFF;
 }
 
 .button

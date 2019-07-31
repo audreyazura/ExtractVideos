@@ -180,8 +180,13 @@ public class Video
      * trying to download if there are no link to the video file.
      * @return	true if the video should be downloaded, false otherwise
      */
-    public boolean toDownload ()
+    boolean toDownload ()
     {
 	return (m_link != null);
+    }
+    
+    String getVideoName()
+    {
+	return m_videoID;
     }
 }
