@@ -18,7 +18,6 @@
 package extractvideo_GUI;
 
 import java.io.IOException;
-import java.lang.ModuleLayer.Controller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -78,7 +77,7 @@ public class ExtractVideos_GUI extends Application
 	    infoStage.initModality(Modality.APPLICATION_MODAL);
 	    infoStage.setTitle("Warning!");
 	    infoStage.setScene(new Scene(infoFxml, 400, 200));
-	    infoStage.show();
+	    infoStage.showAndWait();
 	    infoStage.requestFocus();
 	}
 	catch (IOException ex)
