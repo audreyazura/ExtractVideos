@@ -23,6 +23,7 @@ import javafx.fxml.FXML;
 import extractvideos_dlappli.ExtractVideos_DlAppli;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.NoSuchFileException;
+import java.util.zip.DataFormatException;
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -58,6 +59,14 @@ public class FXMLMainWindowController
     
     @FXML void dlStart(ActionEvent event)
     {
+//	Thread dlThread = new Thread()
+//	{
+//	    public void run()
+//	    {
+//		ExtractVideos_DlAppli.extract(addressfield.getText());
+//	    }
+//	};
+
 	Thread dlThread = new Thread(() ->
 	{
 	    try
@@ -78,11 +87,18 @@ public class FXMLMainWindowController
 		    ExtractVideos_GUI.popupInfo("Un dossier \"Video\" a été trouvé dans le dossier de la base sakuga. Il va être renommé en Video_OLD.");
 		});
 	    }
+	    catch (DataFormatException exData)
+	    {
+		Platform.runLater(() ->
+		{
+		    ExtractVideos_GUI.popupInfo("Le fichier de base sakuga ne peut pas être lu correctement.");
+		});
+	    }
 	});
 	
 	Thread.UncaughtExceptionHandler h = (Thread th, Throwable ex) -> 
 	{
-	    System.out.println("Uncaught exception: " + ex);
+	    System.out.println("Uncaught exception: " + ex.getClass());
 	};
 	
 	dlThread.setUncaughtExceptionHandler(h);

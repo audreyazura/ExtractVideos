@@ -27,8 +27,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import extractvideo_GUI.ExtractVideos_GUI;
-import javafx.application.Platform;
+import java.util.zip.DataFormatException;
 
 /**
  * Class creating the Array List containing all the information about the videos from the file enetered by the user
@@ -46,8 +45,9 @@ public class SakugaDAO
      * @throws FileNotFoundException
      * @throws IOException
      * @throws MalformedURLException
+     * @throws java.util.zip.DataFormatException
      */
-    public SakugaDAO(File p_fileBase) throws FileNotFoundException, IOException, MalformedURLException
+    public SakugaDAO(File p_fileBase) throws FileNotFoundException, IOException, MalformedURLException, DataFormatException
     {
 	BufferedReader sakugaRead = new BufferedReader(new FileReader(p_fileBase));
 	
@@ -58,11 +58,8 @@ public class SakugaDAO
 	    
 	    if(cutSplit.length != 5)
 	    {
-		Platform.runLater(() ->
-		{
-		    ExtractVideos_GUI.popupInfo("Le fichier de base ne peut pas être lu correctement.");
-		});
 		ExtractVideos_DlAppli.stopped = true;
+		throw new DataFormatException();
 	    }
 
 	    //if the line is not empty, and if it is not the line with the title of the column

@@ -18,6 +18,7 @@
 package extractvideos_dlappli;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import static java.lang.Math.log10;
 import java.nio.file.NoSuchFileException;
@@ -29,6 +30,7 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.SimpleFormatter;
 
 import java.nio.file.FileAlreadyExistsException;
+import java.util.zip.DataFormatException;
 
 /**
  * Class coordinating the video extraction
@@ -40,7 +42,7 @@ public class ExtractVideos_DlAppli
     static Logger cutInfoLogger = Logger.getLogger(ExtractVideos_DlAppli.class.getName());
     static boolean stopped = false;
     
-    public static void main (String[] args) throws NoSuchFileException, FileAlreadyExistsException
+    public static void main (String[] args) throws NoSuchFileException, FileAlreadyExistsException, DataFormatException
     {
 	extract("/home/audreyazura/Documents/Nijikai/BaseSakuga.tsv");
     }
@@ -52,8 +54,9 @@ public class ExtractVideos_DlAppli
      * @return boolean did the execution went smoothly
      * @throws java.nio.file.NoSuchFileException
      * @throws java.nio.file.FileAlreadyExistsException
+     * @throws java.util.zip.DataFormatException
      */
-    public static boolean extract(String p_fileSakuga) throws NoSuchFileException, FileAlreadyExistsException
+    public static boolean extract(String p_fileSakuga) throws NoSuchFileException, FileAlreadyExistsException, DataFormatException
     {
 	List<Video> videoList;
 	SimpleFormatter defaultFormatter = new SimpleFormatter();
