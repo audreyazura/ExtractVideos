@@ -52,7 +52,7 @@ public class SakugaDAO
 	BufferedReader sakugaRead = new BufferedReader(new FileReader(p_fileBase));
 	
 	String line;
-	while (((line = sakugaRead.readLine()) != null) && !ExtractVideos_DlAppli.stopped)
+	while (((line = sakugaRead.readLine()) != null) && !(ExtractVideos_DlAppli.stopped))
 	{	    
 	    String[] cutSplit = line.split("\t");
 	    

@@ -19,10 +19,11 @@ package extractvideo_GUI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.stage.Stage;
 
 import extractvideos_dlappli.ExtractVideos_DlAppli;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.NoSuchFileException;
+import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
@@ -57,16 +58,34 @@ public class FXMLMainWindowController
     
     @FXML void dlStart(ActionEvent event)
     {
-	new Thread(() ->
+	Thread dlThread = new Thread(() ->
 	{
 	    try
 	    {
 	        ExtractVideos_DlAppli.extract(addressfield.getText());
 	    }
-	    catch (NoSuchFileException ex)
+	    catch (NoSuchFileException exNoFile)
 	    {
-		 ExtractVideos_GUI.popupInfo("Le fichier ne peut pas être trouvé.");
+		Platform.runLater(() ->
+		{
+		    ExtractVideos_GUI.popupInfo("Le fichier ne peut pas être trouvé.");
+		});
 	    }
-	}).start();
+	    catch (FileAlreadyExistsException exExist)
+	    {
+		Platform.runLater(() ->
+		{
+		    ExtractVideos_GUI.popupInfo("Un dossier \"Video\" a été trouvé dans le dossier de la base sakuga. Il va être renommé en Video_OLD.");
+		});
+	    }
+	});
+	
+	Thread.UncaughtExceptionHandler h = (Thread th, Throwable ex) -> 
+	{
+	    System.out.println("Uncaught exception: " + ex);
+	};
+	
+	dlThread.setUncaughtExceptionHandler(h);
+	dlThread.start();
     }
 }

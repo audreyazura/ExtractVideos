@@ -28,8 +28,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.SimpleFormatter;
 
-import extractvideo_GUI.ExtractVideos_GUI;
-import javafx.application.Platform;
+import java.nio.file.FileAlreadyExistsException;
 
 /**
  * Class coordinating the video extraction
@@ -41,7 +40,7 @@ public class ExtractVideos_DlAppli
     static Logger cutInfoLogger = Logger.getLogger(ExtractVideos_DlAppli.class.getName());
     static boolean stopped = false;
     
-    public static void main (String[] args) throws NoSuchFileException
+    public static void main (String[] args) throws NoSuchFileException, FileAlreadyExistsException
     {
 	extract("/home/audreyazura/Documents/Nijikai/BaseSakuga.tsv");
     }
@@ -52,8 +51,9 @@ public class ExtractVideos_DlAppli
      * @param p_fileSakuga the address of the sakuga base
      * @return boolean did the execution went smoothly
      * @throws java.nio.file.NoSuchFileException
+     * @throws java.nio.file.FileAlreadyExistsException
      */
-    public static boolean extract(String p_fileSakuga) throws NoSuchFileException
+    public static boolean extract(String p_fileSakuga) throws NoSuchFileException, FileAlreadyExistsException
     {
 	List<Video> videoList;
 	SimpleFormatter defaultFormatter = new SimpleFormatter();
@@ -73,11 +73,8 @@ public class ExtractVideos_DlAppli
 	    
 	    if (dlFolder.isDirectory())
 	    {
-		Platform.runLater(() ->
-		{
-		    ExtractVideos_GUI.popupInfo("Un dossier \"Video\" a été trouvé dans le dossier de la base sakuga. Il va être renommé en Video_OLD.");
-		}); 
 		dlFolder.renameTo(new File(dlFolder.getAbsolutePath() + "_OLD"));
+		throw new FileAlreadyExistsException(dlFolder.toString());
 	    }
 	    
 	    if (dlFolder.mkdir())
