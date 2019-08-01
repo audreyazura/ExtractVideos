@@ -20,54 +20,70 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     Author     : audreyazura
 */
 
-.gridpane
+.vbox
 {
-    -fx-alignment: top-center;
-    -fx-hgap: 10px;
-/*    -fx-background-color: #292929;*/
-}
-
-#pbar
-{
-    -fx-progress-color: #00FF00;
-}
-
-#vboxdl
-{
-    -fx-padding: 25px;
-    -fx-spacing: 100px;
-    -fx-alignment: top-left;
-    -fx-fill-width: true;
-    -fx-background-color: #292929;
-}
-
-#insidebox
-{
-    -fx-padding: 25px;
     -fx-spacing: 10px;
     -fx-alignment: top-left;
     -fx-fill-width: true;
     -fx-background-color: #292929;
 }
 
-#maingrid
+#mainbox
 {
     -fx-background-image: url("ExtractorBG.png");
-    -fx-vgap: 10px;
-    -fx-padding: 25px;
+    -fx-padding: 50px 25px 25px 25px;
+    -fx-spacing: 30px;
 }
 
-#instructgrid
+#dlwindowbox
 {
-    -fx-vgap: 7px;
+    -fx-padding: 25px;
+    -fx-spacing: 50px;
 }
 
-.text
+#popupbox
+{
+    -fx-padding: 25px;
+    -fx-alignment: center;
+    -fx-background-color: null;
+    -fx-spacing: 30px;
+}
+
+
+
+.hbox
+{
+    -fx-spacing: 20px;
+    -fx-fill-height: true;
+    -fx-alignment: center;
+}
+
+#dlbuttonbox
+{
+    -fx-padding: 90px 0px 0px 0px;
+}
+
+#closebuttonbox
+{
+    -fx-alignment: bottom-right;
+}
+
+
+
+
+
+.windowtext
 {
     -fx-font-family: URWPalladioL;
     -fx-text-alignment: justify;
+    -fx-text-fill: #FFFFFF;
     -fx-font-size: 16px;
+    -fx-wrap-text: true;
 }
+
+
+
+
 
 .label
 {
@@ -80,43 +96,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #popuptext
 {
-    -fx-text-fill: #000000;
+    -fx-text-fill: black;
 }
 
-#textfieldlabel
-{
-    -fx-font-size: 15px;
-}
 
-#addressfield
-{
-    -fx-alignment: center-left;
-}
 
-#devtxt
-{
-    -fx-font-family: URWPalladioL;
-    -fx-alignment: top-center;
-    -fx-font-size: 20px;
-    -fx-fill: firebrick;
-}
 
-.hbox
-{
-    -fx-spacing: 10px;
-    -fx-alignment: CENTER;
-}
-
-.textarea
-{
-    -fx-background-color: #FFFFFF;
-}
 
 .button
 {
     -fx-alignment: baseline-center;
     -fx-font-family: URWPalladioL;
-    -fx-text-fill: black;
+    -fx-text-fill: #000000;
+    -fx-font-size: 16px;
     -fx-background-color: linear-gradient(#FFFFFF, #002535);
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,50,0.8) , 10, 0.0 , 0 , 1 );
 }
@@ -137,8 +129,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     -fx-alignment: center;
 }
 
-#pbar
+
+
+
+
+.pbar
 {
-    -fx-progress-color: green;
+    -fx-progress-color: #000000;
 }
 
+
+
+
+.addressfield
+{
+    -fx-alignment: center-left;
+}

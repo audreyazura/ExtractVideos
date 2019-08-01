@@ -2,30 +2,18 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<GridPane fx:controller="extractvideo_GUI.FXMLPopupInfoController" xmlns:fx="http://javafx.com/fxml">
-    
-    <rowConstraints>
-        <RowConstraints minHeight="100" />
-        <RowConstraints minHeight="100" />
-    </rowConstraints>
+<VBox styleClass="vbox" fx:id="popupbox" fx:controller="extractvideo_GUI.FXMLPopupInfoController" xmlns:fx="http://javafx.com/fxml">
     
     <stylesheets>
         <URL value="@WindowStyle.css" />
     </stylesheets>
     
-    <Label textAlignment="center"
-          GridPane.columnIndex="0" GridPane.rowIndex="0"
-          fx:id="popuptext"/>
-    
-    <HBox alignment="center" GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <Button text="OK" fx:id="okbutton" defaultButton="true"
-                onAction="#closePopup"/>
-    </HBox>
+     <Label prefHeight="100" fx:id="popuptext"/>
+        
+    <Button text="OK" fx:id="okbutton" defaultButton="true" onAction="#closePopup"/>
 
-</GridPane>
+</VBox>

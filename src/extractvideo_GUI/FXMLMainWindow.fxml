@@ -5,72 +5,36 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.text.Text?>
 
 
-<GridPane fx:controller="extractvideo_GUI.FXMLMainWindowController" xmlns:fx="http://javafx.com/fxml"
-          fx:id="maingrid">
-    
-    <columnConstraints>
-        <ColumnConstraints hgrow="always" minWidth="100.0" prefWidth="125.0"/>
-        <ColumnConstraints hgrow="always" minWidth="500.0" prefWidth="500.0"/>
-        <ColumnConstraints hgrow="always" minWidth="100.0" prefWidth="125.0"/>
-    </columnConstraints>
+<VBox fx:controller="extractvideo_GUI.FXMLMainWindowController" xmlns:fx="http://javafx.com/fxml"
+      styleClass="vbox" fx:id="mainbox" >
     
     <stylesheets>
         <URL value="@WindowStyle.css" />
-    </stylesheets>
+    </stylesheets>    
     
-<!--    <TextFlow wrapText="true">
-        <Text fx:id="instructtxt" text=" Bienvenue dans l'extracteur de Sakuga ! Pour l'utiliser, veuillez suivre les étapes suivantes :
-                1) Téléchargez la base sakuga dans un fichiers de valeurs séparées par des tabulations (sur le Google Sheet, vous pouvez le faire en allant dans Fichier -> Télécharger au format -> Valeurs séparées par des tabulation (.tsv, feuille active). Le fichier résultant devrait être au format *.tsv
-                2) Cliquez sur le bouton &quot;Parcourir&quot; ci-dessous et sélectionnez le fichier tsv que vous venez de créer.
-                3) Cliquez sur le bouton &quot;Télécharger&quot;. L'extracteur va créer un dossier &quot;Vidéo&quot; dans le même dossier que le fichier tsv, dans lequel se trouveront toutes les vidéos ainsi que leurs sous-titres.
-                4) PROFIT!"/>
-    </TextFlow>-->
-    
-        
-    <VBox GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="3">
-        <GridPane fx:id="instructgrid">
-            <Label text="Bienvenue dans l'extracteur de Sakuga ! Pour l'utiliser, veuillez suivre les étapes suivantes :"
-                   GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <Label text="1) Téléchargez la base sakuga dans un fichiers de valeurs séparées par des tabulations (sur le Google Sheet, vous pouvez le faire en allant dans Fichier -> Télécharger au format -> Valeurs séparées par des tabulation (.tsv, feuille active). Le fichier résultant devrait être au format *.tsv"
-                   GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <Label text="2) Cliquez sur le bouton &quot;Parcourir&quot; ci-dessous et sélectionnez le fichier tsv que vous venez de créer."
-                   GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-            <Label text="3) Cliquez sur le bouton &quot;Télécharger&quot;. L'extracteur va créer un dossier &quot;Vidéo&quot; dans le même dossier que le fichier tsv, dans lequel se trouveront toutes les vidéos ainsi que leurs sous-titres."
-                   GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-            <Label text="4) PROFIT!"
-                   GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-        </GridPane>
+    <VBox styleClass="vbox">    
+        <Label styleClass="windowtext" text="Bienvenue dans l'extracteur de Sakuga ! Pour l'utiliser, veuillez suivre les étapes suivantes :" />
+        <Label styleClass="windowtext" text="1) Téléchargez la base sakuga dans un fichiers de valeurs séparées par des tabulations (sur le Google Sheet, vous pouvez le faire en allant dans Fichier -> Télécharger au format -> Valeurs séparées par des tabulation (.tsv, feuille active). Le fichier résultant devrait être au format *.tsv" />
+        <Label styleClass="windowtext" text="2) Cliquez sur le bouton &quot;Parcourir&quot; ci-dessous et sélectionnez le fichier tsv que vous venez de créer." />
+        <Label styleClass="windowtext" text="3) Cliquez sur le bouton &quot;Télécharger&quot;. L'extracteur va créer un dossier &quot;Vidéo&quot; dans le même dossier que le fichier tsv, dans lequel se trouveront toutes les vidéos ainsi que leurs sous-titres." />
+        <Label styleClass="windowtext" text="4) PROFIT!" />
     </VBox>
     
-    <Label text="Base sakuga :" alignment="center_right"
-           GridPane.columnIndex="0" GridPane.rowIndex="4"
-           GridPane.hgrow="always" GridPane.vgrow="always"
-           fx:id="textfieldlabel" />
-    
-    <TextField fx:id="addressfield"
-           GridPane.columnIndex="1" GridPane.rowIndex="4"
-           GridPane.hgrow="always" GridPane.vgrow="always"/>
-    
-    <HBox GridPane.columnIndex="2" GridPane.rowIndex="4" alignment="center"
-          GridPane.hgrow="always" GridPane.vgrow="always">
-        <Button text="Parcourir"
-                onAction="#browsingStart"/>
+    <HBox styleClass="hbox" prefWidth="750">
+        <Label text="Base sakuga :" alignment="center" />
+
+        <TextField styleClass="addressfield" fx:id="addressfield" prefWidth="500" />
+
+        <Button text="Parcourir" alignment="center" onAction="#browsingStart"/>
     </HBox>
     
-    <HBox alignment="center" GridPane.columnIndex="1" GridPane.rowIndex="8"
-          GridPane.hgrow="always" GridPane.vgrow="always">
-        <Button text="Télécharger" defaultButton="true"
-                onAction="#dlStart"
-                fx:id="dlbutton"/>
-    </HBox>
-    
-<!--    <gridLinesVisible>true</gridLinesVisible>-->
-    
-</GridPane>
+    <HBox styleClass="hbox" fx:id="dlbuttonbox">
+        <Button text="Télécharger" defaultButton="true" onAction="#dlStart" fx:id="dlbutton"/>
+    </HBox>    
+</VBox>

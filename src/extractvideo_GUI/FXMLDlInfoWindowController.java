@@ -17,13 +17,11 @@
  */
 package extractvideo_GUI;
 
-import extractvideos_dlappli.ExtractVideos_DlAppli;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -35,14 +33,12 @@ public class FXMLDlInfoWindowController
 
      @FXML private TextArea consolewindow;
      @FXML private ProgressBar pbar;
-     @FXML Button closebutton;
     
     void updateProgress (String message, double progress)
     {
-	String currentText = consolewindow.getText();
-	currentText += message+"\n";
-	consolewindow.setText(currentText);
-//	
+	String currentText = message+"\n";
+	consolewindow.appendText(currentText);
+	
 	pbar.setProgress(progress);
     }
     

@@ -140,18 +140,18 @@ public class ExtractVideos_DlAppli
 		    {
 			if (lIndex <= listSize0-1)
 			{
-			    Platform.runLater(new toUpdateGUI("Problème avec le téléchargement de la vidéo "+currentVid.getVideoName()+". Entrée dans le log.\n", ((double) lIndex+1)/((double) listSize0)));
+			    Platform.runLater(new toUpdateGUI("Problème avec le téléchargement de la vidéo "+currentVid.getVideoName()+". L'évènement a été entré dans le log.\n", ((double) lIndex+1)/((double) listSize0)));
 			}
 			else
 			{
-			    Platform.runLater(new toUpdateGUI("Problème avec le téléchargement de la vidéo "+currentVid.getVideoName()+". Entrée dans le log.\n", ((double) lIndex)/((double) listSize0)));
+			    Platform.runLater(new toUpdateGUI("Problème avec le téléchargement de la vidéo "+currentVid.getVideoName()+". L'évènement a été entré dans le log.\n", ((double) lIndex)/((double) listSize0)));
 			}
 		    }
 		}
 		
 		Platform.runLater(() ->
 		{
-		    ExtractVideos_GUI.notifyDlEnd();
+		    ExtractVideos_GUI.popupInfo("Le téléchargement des vidéos est terminé! Vous allez être redirigé vers la fenêtre d'acceuil.", null, true);
 		});
 	    }
 	    

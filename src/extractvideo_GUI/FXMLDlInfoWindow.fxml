@@ -9,25 +9,24 @@
 <?import javafx.scene.control.ProgressBar?>
 
 <VBox fx:controller="extractvideo_GUI.FXMLDlInfoWindowController" xmlns:fx="http://javafx.com/fxml/1"
-      fx:id="vboxdl">
+      styleClass="vbox" fx:id="dlwindowbox">
         
     <stylesheets>
         <URL value="@WindowStyle.css" />
     </stylesheets>
     
-    <TextArea editable="false" wrapText="true"
-              fx:id="consolewindow" />
+    <TextArea wrapText="true"
+              prefHeight="350" fx:id="consolewindow" />
     
-    <VBox fx:id="insidebox">
-        <Label text="Progression totale :" />
+    <VBox styleClass="vbox">
+        <Label fx:id="progress" text="Progression totale :" />
     
-        <ProgressBar fx:id="pbar" prefHeight="50" prefWidth="700" />
+        <ProgressBar fx:id="pbar" styleClass="pbar" prefHeight="50" prefWidth="750" />
     </VBox>
     
-    <HBox alignment="CENTER_RIGHT">
+    <HBox styleClass="hbox" fx:id="closebuttonbox" >
         <Button text="Close" fx:id="closebutton"
-                cancelButton="true" onAction="#closeApp" />
-
+                    cancelButton="true" onAction="#closeApp" />
     </HBox>
     
 </VBox>

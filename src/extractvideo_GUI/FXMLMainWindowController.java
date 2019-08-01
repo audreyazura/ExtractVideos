@@ -58,35 +58,42 @@ public class FXMLMainWindowController
     
     @FXML private void dlStart(ActionEvent event)
     {
-	ExtractVideos_GUI.initiateDlScene();
-
-	//to refactor with a uncaughtExceptionHandler for popupCritical?
+	String enteredAddress = addressfield.getText();
 	
-	new Thread(() ->
+	if (enteredAddress == null || enteredAddress.equals(""))
 	{
-	    try
+    	   ExtractVideos_GUI.popupInfo("Entrez l'adresse du fichier.", "", false);
+	}
+	else
+	{
+	    ExtractVideos_GUI.initiateDlScene();
+	    //to refactor with a uncaughtExceptionHandler for popupCritical?
+	    new Thread(() ->
 	    {
-	        ExtractVideos_DlAppli.extract(addressfield.getText());
-	    }
-	    catch (NoSuchFileException | NullPointerException exNoFile)
-	    {
-		Platform.runLater(() ->
+		try
 		{
-		    ExtractVideos_GUI.popupInfo("Le fichier entré ne peut pas être trouvé.", "", true);
-		});
-	    }
-	    catch (DataFormatException exData)
-	    {
-		Platform.runLater(() ->
+		    ExtractVideos_DlAppli.extract(enteredAddress);
+		}
+		catch (NoSuchFileException | NullPointerException exNoFile)
 		{
-		    ExtractVideos_GUI.popupInfo("Le fichier de base sakuga ne peut pas être lu correctement.", "", true);
-		});
-	    }
-	    catch (IOException otherEx)
-	    {
-		Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, otherEx);
-	    }
-	}).start();
+		    Platform.runLater(() ->
+		    {
+			ExtractVideos_GUI.popupInfo("Le fichier entré ne peut pas être trouvé.", "", true);
+		    });
+		}
+		catch (DataFormatException exData)
+		{
+		    Platform.runLater(() ->
+		    {
+			ExtractVideos_GUI.popupInfo("Le fichier de base sakuga ne peut pas être lu correctement.", "", true);
+		    });
+		}
+		catch (IOException otherEx)
+		{
+		    Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, otherEx);
+		}
+	    }).start();
+	}
     }
     
     void setFileAddress (String address)
