@@ -68,7 +68,7 @@ public class ExtractVideos_DlAppli
 		{
 		    Platform.runLater(() ->
 		    {
-			ExtractVideos_GUI.popupInfo("Les dossiers \"Video\" et \"Video_OLD\" existent déjà dans le dossier de la base sakuga. Veillez les déplacer pour éviter une perte de données, puis relancer le téléchargement.", p_fileSakuga, true);
+			ExtractVideos_GUI.popupInfo("Les dossiers \"Video\" et \"Video_OLD\" existent déjà dans le dossier de la base sakuga. Veuillez les déplacer pour éviter une perte de données, puis relancer le téléchargement.", p_fileSakuga, true);
 		    });
 		}
 		else
