@@ -24,10 +24,10 @@
         <ProgressBar fx:id="pbar" prefHeight="50" prefWidth="700" />
     </VBox>
     
-<!--    <HBox alignment="center-left">
+    <HBox alignment="CENTER_RIGHT">
         <Button text="Close" fx:id="closebutton"
-                cancelButton="true"
-                onAction="#closeApp">
-    </HBox>-->
+                cancelButton="true" onAction="#closeApp" />
+
+    </HBox>
     
 </VBox>

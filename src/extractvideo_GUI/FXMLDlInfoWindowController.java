@@ -17,9 +17,7 @@
  */
 package extractvideo_GUI;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import extractvideos_dlappli.ExtractVideos_DlAppli;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -37,20 +35,20 @@ public class FXMLDlInfoWindowController
 
      @FXML private TextArea consolewindow;
      @FXML private ProgressBar pbar;
-//    @FXML Button closebutton;
+     @FXML Button closebutton;
     
     void updateProgress (String message, double progress)
     {
-//	String currentText = consolewindow.getText();
-//	currentText += "\n"+message;
-	consolewindow.setText(message);
+	String currentText = consolewindow.getText();
+	currentText += message+"\n";
+	consolewindow.setText(currentText);
 //	
 	pbar.setProgress(progress);
     }
     
-//    @FXML void closeApp(ActionEvent event)
-//    {
-//	((Stage) closebutton.getScene().getWindow()).close();
-//    }    
+    @FXML void closeApp(ActionEvent event)
+    {
+	System.exit(0);
+    }    
     
 }
