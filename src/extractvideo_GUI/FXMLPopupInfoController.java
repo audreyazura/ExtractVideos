@@ -32,14 +32,24 @@ public class FXMLPopupInfoController
 {
     @FXML private Label popuptext;
     @FXML private Button okbutton;
+    private Thread m_initiatingThread;
     
     void setPopupInfo(String message)
     {
 	popuptext.setText(message);
     }
     
-    @FXML void closePopup(ActionEvent event)
+    void setInitiatingThread(Thread p_initiatingThread)
     {
+	m_initiatingThread = p_initiatingThread;
+    }
+    
+    @FXML synchronized void closePopup(ActionEvent event)
+    {
+	if (m_initiatingThread != null)
+	{
+	    m_initiatingThread.notify();
+	}
 	((Stage) okbutton.getScene().getWindow()).close();
     }
 }

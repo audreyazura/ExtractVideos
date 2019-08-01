@@ -18,6 +18,7 @@
 package extractvideos_dlappli;
 
 import extractvideo_GUI.ExtractVideos_GUI;
+
 import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.log10;
@@ -27,8 +28,6 @@ import java.util.logging.Logger;
 import java.util.logging.FileHandler;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.SimpleFormatter;
-
-import java.nio.file.FileAlreadyExistsException;
 import java.util.zip.DataFormatException;
 import javafx.application.Platform;
 
@@ -74,8 +73,23 @@ public class ExtractVideos_DlAppli
 	    
 	    if (dlFolder.isDirectory())
 	    {
-		dlFolder.renameTo(new File(dlFolder.getAbsolutePath() + "_OLD"));
-		throw new FileAlreadyExistsException(dlFolder.toString());
+		File renameDestination = new File(dlFolder.getAbsolutePath() + "_OLD");
+		
+		if (renameDestination.isDirectory())
+		{
+		    Platform.runLater(() ->
+		    {
+			ExtractVideos_GUI.popupCritical("Les dossiers \"Video\" et \"Video_OLD\" existent déjà dans le dossier de la base sakuga. Veillez les déplacer pour éviter une perte de données.");
+		    });
+		}
+		else
+		{
+		    Platform.runLater(() ->
+		    {
+			ExtractVideos_GUI.popupInfo("Un dossier \"Video\" a été trouvé dans le dossier de la base sakuga. Il a été renommé en Video_OLD.");
+		    });
+		    dlFolder.renameTo(renameDestination);
+		}
 	    }
 	    
 	    if (dlFolder.mkdir())

@@ -21,7 +21,6 @@ import extractvideos_dlappli.ExtractVideos_DlAppli;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.NoSuchFileException;
 import java.util.zip.DataFormatException;
 import javafx.application.Platform;
@@ -77,40 +76,6 @@ public class FXMLMainWindowController
 		{
 		    ExtractVideos_GUI.popupCritical("Le fichier entré ne peut pas être trouvé.");
 		});
-	    }
-	    catch (FileAlreadyExistsException exExist)
-	    {
-		Platform.runLater(() ->
-		{
-		    ExtractVideos_GUI.popupInfo("Un dossier \"Video\" a été trouvé dans le dossier de la base sakuga. Il va être renommé en Video_OLD.");
-		});
-		
-		try
-		{
-		    ExtractVideos_DlAppli.extract(addressfield.getText());
-		} 
-		catch (DataFormatException ex)
-		{
-		    Platform.runLater(() ->
-		    {
-			ExtractVideos_GUI.popupCritical("Le fichier de base sakuga ne peut pas être lu correctement.");
-		    });
-		}
-		catch (NoSuchFileException exNoFile)
-		{
-		    Platform.runLater(() ->
-		    {
-			ExtractVideos_GUI.popupCritical("Le fichier entré ne peut pas être trouvé.");
-		    });
-		}
-		catch (FileAlreadyExistsException exExistAgain)
-		{
-		    ExtractVideos_GUI.popupCritical("Impossible de créer un doissier \"Video_OLD\". Veuillez faire du ménage dans le dossier contenant la base sakuga.");
-		}
-		catch (IOException ex)
-		{
-		    Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-		}
 	    }
 	    catch (DataFormatException exData)
 	    {

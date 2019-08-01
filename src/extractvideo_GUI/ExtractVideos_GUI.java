@@ -61,7 +61,7 @@ public class ExtractVideos_GUI extends Application
 	}
     }
     
-    static void popupInfo(String infoMessage)
+    public static void popupInfo(String infoMessage)
     {
 	
 	Stage infoStage = new Stage();
@@ -75,7 +75,6 @@ public class ExtractVideos_GUI extends Application
 	    popupController.setPopupInfo(infoMessage);
 	    
 	    infoStage.initOwner(mainStage);
-	    infoStage.initModality(Modality.APPLICATION_MODAL);
 	    infoStage.setTitle("Warning!");
 	    infoStage.setScene(new Scene(infoFxml, 400, 200));
 	    infoStage.showAndWait();
@@ -87,7 +86,7 @@ public class ExtractVideos_GUI extends Application
 	}
     }
     
-    static void popupCritical(String infoMessage)
+    public static void popupCritical(String infoMessage)
     {
 	
 	Stage popupStage = new Stage();
@@ -101,7 +100,6 @@ public class ExtractVideos_GUI extends Application
 	    popupController.setPopupInfo(infoMessage);
 	    
 	    popupStage.initOwner(mainStage);
-	    popupStage.initModality(Modality.APPLICATION_MODAL);
 	    popupStage.setTitle("Error!");
 	    popupStage.setScene(new Scene(infoFxml, 400, 200));
 	    popupStage.showAndWait();
