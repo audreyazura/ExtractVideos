@@ -53,12 +53,26 @@ public class ExtractVideos_DlAppli
 	List<Video> videoList;
 	SimpleFormatter defaultFormatter = new SimpleFormatter();
 	
+	
+	
 	try
 	{
 	    File sakugaCSV = new File(p_fileSakuga);
 	    String sakugaFolder = sakugaCSV.getParent();
 	    //we want the video folder to be in the same folder as the sakuga base
 	    File dlFolder = new File(sakugaFolder + "/Videos");
+	    
+	    File logFile = new File(sakugaFolder + "/CutsManquant.log");
+	    if (logFile.isFile())
+	    {
+		logFile.renameTo(new File(logFile.getAbsolutePath()+".old"));
+	    }
+	    
+	    System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tR %1td/%1$tm/%1$tY] %4$s : %5$s\n");
+	    FileHandler missingCutHandler = new FileHandler(sakugaFolder + "/CutsManquant.log");
+	    SimpleFormatter missingCutFormatter = new SimpleFormatter();
+	    missingCutHandler.setFormatter(missingCutFormatter);
+	    cutInfoLogger.addHandler(missingCutHandler);
 	    
 	    if (dlFolder.isDirectory())
 	    {
@@ -86,17 +100,16 @@ public class ExtractVideos_DlAppli
 		Platform.runLater(new toUpdateGUI("Lecture de la base sakuga...\n", 0));
 		videoList = new SakugaDAO(sakugaCSV).getVideoList();
 	    
-		System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tR %1td/%1$tm/%1$tY] %4$s : %5$s\n");
-		FileHandler missingCutHandler = new FileHandler(sakugaFolder + "/CutsManquant.log");
-		SimpleFormatter missingCutFormatter = new SimpleFormatter();
-		missingCutHandler.setFormatter(missingCutFormatter);
-		cutInfoLogger.addHandler(missingCutHandler);
-		
-		int log10ListSize = (int) log10(videoList.size()-1);
+		int listSize0 = videoList.size()-1;
+		int log10ListSize = (int) log10(listSize0);
 		int index = 1;
 		
 		for (Video currentVid: videoList)
 		{
+		    int lIndex = videoList.indexOf(currentVid);
+		    
+		    Platform.runLater(new toUpdateGUI("Téléchargement de "+currentVid.getVideoName()+"...", ((double) lIndex)/((double) listSize0)));
+		   
 		    if (currentVid.toDownload())
 		    {
 			//to know the number of zero to put in the front of the index to get the video index, we compare the magnitude of the size of the list to the magnitude of the index
@@ -109,16 +122,37 @@ public class ExtractVideos_DlAppli
 			}
 			String vidIndex = zeroPrefix + index;
 
-			Platform.runLater(new toUpdateGUI("Téléchargement de "+vidIndex+" - "+currentVid.getVideoName()+"...", ((double) index-1)/((double) videoList.size()-1)));
-
 			currentVid.downloadVideo(dlFolder.toString(), vidIndex);
 			currentVid.makeSub(dlFolder.toString(), vidIndex);
 
 			index += 1;
 
-			Platform.runLater(new toUpdateGUI("Video "+vidIndex+" - "+currentVid.getVideoName()+" téléchargée.\n", ((double) index-1)/((double) videoList.size()-1)));
+			if (lIndex <= listSize0-1)
+			{
+			    Platform.runLater(new toUpdateGUI("Video "+vidIndex+" - "+currentVid.getVideoName()+" téléchargée.\n", ((double) lIndex+1)/((double) listSize0)));
+			}
+			else
+			{
+			    Platform.runLater(new toUpdateGUI("Video "+vidIndex+" - "+currentVid.getVideoName()+" téléchargée.\n", ((double) lIndex)/((double) listSize0)));
+			}
+		    }
+		    else
+		    {
+			if (lIndex <= listSize0-1)
+			{
+			    Platform.runLater(new toUpdateGUI("Problème avec le téléchargement de la vidéo "+currentVid.getVideoName()+". Entrée dans le log.\n", ((double) lIndex+1)/((double) listSize0)));
+			}
+			else
+			{
+			    Platform.runLater(new toUpdateGUI("Problème avec le téléchargement de la vidéo "+currentVid.getVideoName()+". Entrée dans le log.\n", ((double) lIndex)/((double) listSize0)));
+			}
 		    }
 		}
+		
+		Platform.runLater(() ->
+		{
+		    ExtractVideos_GUI.notifyDlEnd();
+		});
 	    }
 	    
 	}
