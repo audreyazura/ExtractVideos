@@ -17,11 +17,11 @@
  */
 package extractvideo_GUI;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -31,16 +31,17 @@ import javafx.stage.Stage;
 public class FXMLPopupCriticalController
 {
     @FXML private Label popuptext;
-    @FXML private Button okbutton;
     
     void setPopupInfo(String message)
     {
 	popuptext.setText(message);
     }
     
-    @FXML void closePopup(ActionEvent event)
+    @FXML void killApp(ActionEvent event)
     {
-	((Stage) okbutton.getScene().getWindow()).close();
-	ExtractVideos_GUI.mainStage.close();
+	Platform.runLater(() ->
+	{
+	    System.exit(0);
+	});
     }
 }

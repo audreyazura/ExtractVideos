@@ -96,7 +96,7 @@ public class ExtractVideos_GUI extends Application
 	try
 	{
 	    Parent infoFxml = fxmlLoader.load();
-	    FXMLPopupInfoController popupController = fxmlLoader.getController();
+	    FXMLPopupCriticalController popupController = fxmlLoader.getController();
 	    
 	    popupController.setPopupInfo(infoMessage);
 	    
