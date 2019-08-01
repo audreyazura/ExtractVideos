@@ -40,7 +40,6 @@ public class ExtractVideos_DlAppli
 {
 
     static Logger cutInfoLogger = Logger.getLogger(ExtractVideos_DlAppli.class.getName());
-    static boolean stopped = false;
     
     public static void main (String[] args) throws IOException, DataFormatException
     {
@@ -86,31 +85,29 @@ public class ExtractVideos_DlAppli
 	    
 		int log10ListSize = (int) log10(videoList.size()-1);
 		int index = 1;
-		if(!stopped)
+		
+		for (Video currentVid: videoList)
 		{
-		    for (Video currentVid: videoList)
+		    if (currentVid.toDownload())
 		    {
-			if (currentVid.toDownload())
+			//to know the number of zero to put in the front of the index to get the video index, we compare the magnitude of the size of the list to the magnitude of the index
+			String zeroPrefix = new String();
+			int nZeros = log10ListSize - (int) log10(index);
+			for (int i = 0 ; i < nZeros ; i+=1)
 			{
-			    //to know the number of zero to put in the front of the index to get the video index, we compare the magnitude of the size of the list to the magnitude of the index
-			    String zeroPrefix = new String();
-			    int nZeros = log10ListSize - (int) log10(index);
-			    for (int i = 0 ; i < nZeros ; i+=1)
-			    {
-				zeroPrefix += "0";
+			    zeroPrefix += "0";
 
-			    }
-			    String vidIndex = zeroPrefix + index;
-                            
-			    Platform.runLater(new toUpdateGUI("Téléchargement de "+vidIndex+" - "+currentVid.getVideoName()+"...", ((double) index-1)/((double) videoList.size()-1)));
-			    
-			    currentVid.downloadVideo(dlFolder.toString(), vidIndex);
-			    currentVid.makeSub(dlFolder.toString(), vidIndex);
-
-			    index += 1;
-			    
-			    Platform.runLater(new toUpdateGUI("Video "+vidIndex+" - "+currentVid.getVideoName()+" téléchargée.\n", ((double) index-1)/((double) videoList.size()-1)));
 			}
+			String vidIndex = zeroPrefix + index;
+
+			Platform.runLater(new toUpdateGUI("Téléchargement de "+vidIndex+" - "+currentVid.getVideoName()+"...", ((double) index-1)/((double) videoList.size()-1)));
+
+			currentVid.downloadVideo(dlFolder.toString(), vidIndex);
+			currentVid.makeSub(dlFolder.toString(), vidIndex);
+
+			index += 1;
+
+			Platform.runLater(new toUpdateGUI("Video "+vidIndex+" - "+currentVid.getVideoName()+" téléchargée.\n", ((double) index-1)/((double) videoList.size()-1)));
 		    }
 		}
 	    }
