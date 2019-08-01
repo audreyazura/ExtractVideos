@@ -45,17 +45,15 @@ public class FXMLMainWindowController
 	browser.setTitle("Choisissez la base sakuga");
 	browser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Tabulation Separated Value (*.tsv)", "*.tsv"), new FileChooser.ExtensionFilter("All files (*.*)", "*.*"));
 	
-	String fileAdress = "";
 	try
 	{
-	    fileAdress = browser.showOpenDialog(ExtractVideos_GUI.mainStage).getAbsolutePath();
+	    String fileAdress = browser.showOpenDialog(ExtractVideos_GUI.mainStage).getAbsolutePath();
+	    addressfield.setText(fileAdress);
 	}
 	catch (NullPointerException ex)
 	{
-	   ExtractVideos_GUI.popupInfo("Entrez l'adresse du fichier.");
+	   ExtractVideos_GUI.popupInfo("Entrez l'adresse du fichier.", "", false);
 	}
-
-	addressfield.setText(fileAdress);
     }
     
     @FXML private void dlStart(ActionEvent event)
@@ -70,18 +68,18 @@ public class FXMLMainWindowController
 	    {
 	        ExtractVideos_DlAppli.extract(addressfield.getText());
 	    }
-	    catch (NoSuchFileException exNoFile)
+	    catch (NoSuchFileException | NullPointerException exNoFile)
 	    {
 		Platform.runLater(() ->
 		{
-		    ExtractVideos_GUI.popupCritical("Le fichier entré ne peut pas être trouvé.");
+		    ExtractVideos_GUI.popupInfo("Le fichier entré ne peut pas être trouvé.", "", true);
 		});
 	    }
 	    catch (DataFormatException exData)
 	    {
 		Platform.runLater(() ->
 		{
-		    ExtractVideos_GUI.popupCritical("Le fichier de base sakuga ne peut pas être lu correctement.");
+		    ExtractVideos_GUI.popupInfo("Le fichier de base sakuga ne peut pas être lu correctement.", "", true);
 		});
 	    }
 	    catch (IOException otherEx)
@@ -89,5 +87,10 @@ public class FXMLMainWindowController
 		Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, otherEx);
 	    }
 	}).start();
+    }
+    
+    void setFileAddress (String address)
+    {
+	addressfield.setText(address);
     }
 }

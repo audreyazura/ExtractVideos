@@ -32,23 +32,21 @@ public class FXMLPopupInfoController
 {
     @FXML private Label popuptext;
     @FXML private Button okbutton;
-    private Thread m_initiatingThread;
+    private String m_returnAddress;
+    private boolean m_redirect;
     
-    void setPopupInfo(String message)
+    void setPopupInfo(String message, String p_returnAddress, boolean p_redirect)
     {
 	popuptext.setText(message);
-    }
-    
-    void setInitiatingThread(Thread p_initiatingThread)
-    {
-	m_initiatingThread = p_initiatingThread;
+	m_returnAddress = p_returnAddress;
+	m_redirect = p_redirect;
     }
     
     @FXML synchronized void closePopup(ActionEvent event)
     {
-	if (m_initiatingThread != null)
+	if (m_redirect)
 	{
-	    m_initiatingThread.notify();
+	    ExtractVideos_GUI.backToMainWindow(m_returnAddress);
 	}
 	((Stage) okbutton.getScene().getWindow()).close();
     }

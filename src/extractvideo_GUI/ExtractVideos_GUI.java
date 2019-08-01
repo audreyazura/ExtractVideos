@@ -26,7 +26,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
-import javafx.stage.Modality;
 
 /**
  *
@@ -61,7 +60,25 @@ public class ExtractVideos_GUI extends Application
 	}
     }
     
-    public static void popupInfo(String infoMessage)
+    public static void backToMainWindow(String address)
+    {
+	FXMLLoader loader = new FXMLLoader(ExtractVideos_GUI.class.getResource("FXMLMainWindow.fxml"));
+	
+	try
+	{
+	    Parent windowFxml = loader.load();
+	    FXMLMainWindowController controller = loader.getController();
+	    controller.setFileAddress(address);
+	    mainStage.setScene(new Scene(windowFxml, 800, 600));
+	    mainStage.show();
+	}
+	catch (IOException ex)
+	{
+	    Logger.getLogger(ExtractVideos_GUI.class.getName()).log(Level.SEVERE, null, ex);
+	}
+    }
+    
+    public static void popupInfo(String infoMessage, String fileAddress, boolean redirect)
     {
 	
 	Stage infoStage = new Stage();
@@ -72,38 +89,13 @@ public class ExtractVideos_GUI extends Application
 	    Parent infoFxml = fxmlLoader.load();
 	    FXMLPopupInfoController popupController = fxmlLoader.getController();
 	    
-	    popupController.setPopupInfo(infoMessage);
+	    popupController.setPopupInfo(infoMessage, fileAddress, redirect);
 	    
 	    infoStage.initOwner(mainStage);
 	    infoStage.setTitle("Warning!");
 	    infoStage.setScene(new Scene(infoFxml, 400, 200));
 	    infoStage.showAndWait();
 	    infoStage.requestFocus();
-	}
-	catch (IOException ex)
-	{
-	    Logger.getLogger(ExtractVideos_GUI.class.getName()).log(Level.SEVERE, null, ex);
-	}
-    }
-    
-    public static void popupCritical(String infoMessage)
-    {
-	
-	Stage popupStage = new Stage();
-	FXMLLoader fxmlLoader = new FXMLLoader(ExtractVideos_GUI.class.getResource("FXMLPopupCritical.fxml"));
-	
-	try
-	{
-	    Parent infoFxml = fxmlLoader.load();
-	    FXMLPopupCriticalController popupController = fxmlLoader.getController();
-	    
-	    popupController.setPopupInfo(infoMessage);
-	    
-	    popupStage.initOwner(mainStage);
-	    popupStage.setTitle("Error!");
-	    popupStage.setScene(new Scene(infoFxml, 400, 200));
-	    popupStage.showAndWait();
-	    popupStage.requestFocus();
 	}
 	catch (IOException ex)
 	{

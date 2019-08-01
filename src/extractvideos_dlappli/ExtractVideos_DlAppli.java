@@ -40,11 +40,6 @@ public class ExtractVideos_DlAppli
 
     static Logger cutInfoLogger = Logger.getLogger(ExtractVideos_DlAppli.class.getName());
     
-    public static void main (String[] args) throws IOException, DataFormatException
-    {
-	extract("/home/audreyazura/Documents/Nijikai/BaseSakuga.tsv");
-    }
-    
     /**
      * Main function of the package, coordinating the video downloading from the
      * database passed.
@@ -79,14 +74,14 @@ public class ExtractVideos_DlAppli
 		{
 		    Platform.runLater(() ->
 		    {
-			ExtractVideos_GUI.popupCritical("Les dossiers \"Video\" et \"Video_OLD\" existent déjà dans le dossier de la base sakuga. Veillez les déplacer pour éviter une perte de données.");
+			ExtractVideos_GUI.popupInfo("Les dossiers \"Video\" et \"Video_OLD\" existent déjà dans le dossier de la base sakuga. Veillez les déplacer pour éviter une perte de données, puis relancer le téléchargement.", p_fileSakuga, true);
 		    });
 		}
 		else
 		{
 		    Platform.runLater(() ->
 		    {
-			ExtractVideos_GUI.popupInfo("Un dossier \"Video\" a été trouvé dans le dossier de la base sakuga. Il a été renommé en Video_OLD.");
+			ExtractVideos_GUI.popupInfo("Un dossier \"Video\" a été trouvé dans le dossier de la base sakuga. Il a été renommé en Video_OLD.", "", false);
 		    });
 		    dlFolder.renameTo(renameDestination);
 		}
