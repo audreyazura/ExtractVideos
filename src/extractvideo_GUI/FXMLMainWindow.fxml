@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 
 <GridPane fx:controller="extractvideo_GUI.FXMLMainWindowController" xmlns:fx="http://javafx.com/fxml"
@@ -71,10 +70,6 @@
                 onAction="#dlStart"
                 fx:id="dlbutton"/>
     </HBox>
-    
-    <Text fx:id="devtxt"
-          GridPane.columnIndex="1" GridPane.rowIndex="6"
-          GridPane.hgrow="always" GridPane.vgrow="always"/>
     
 <!--    <gridLinesVisible>true</gridLinesVisible>-->
     

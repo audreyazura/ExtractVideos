@@ -81,6 +81,7 @@ public class ExtractVideos_DlAppli
 	    
 	    if (dlFolder.mkdir())
 	    {
+		Platform.runLater(new toUpdateGUI("Lecture de la base sakuga...\n", 0));
 		videoList = new SakugaDAO(sakugaCSV).getVideoList();
 	    
 		int log10ListSize = (int) log10(videoList.size()-1);
@@ -101,14 +102,14 @@ public class ExtractVideos_DlAppli
 			    }
 			    String vidIndex = zeroPrefix + index;
                             
-			    Platform.runLater(new toUpdateGUI("Downloading "+vidIndex+" - "+currentVid.getVideoName(), ((double) index)/((double) videoList.size()-1)));
+			    Platform.runLater(new toUpdateGUI("Téléchargement de "+vidIndex+" - "+currentVid.getVideoName()+"...", ((double) index-1)/((double) videoList.size()-1)));
 			    
 			    currentVid.downloadVideo(dlFolder.toString(), vidIndex);
 			    currentVid.makeSub(dlFolder.toString(), vidIndex);
 
 			    index += 1;
 			    
-//			    Platform.runLater(new toUpdateGUI("Video "+vidIndex+" - "+currentVid.getVideoName()+" downloaded", ((double) index)/((double) videoList.size()-1)));
+			    Platform.runLater(new toUpdateGUI("Video "+vidIndex+" - "+currentVid.getVideoName()+" téléchargée.\n", ((double) index-1)/((double) videoList.size()-1)));
 			}
 		    }
 		}
@@ -139,9 +140,7 @@ public class ExtractVideos_DlAppli
 	@Override
 	public void run()
 	{
-//	    ExtractVideos_GUI.printProgress(m_message, m_progress);
-            
-            System.out.println(m_message +"  "+m_progress);
+	    ExtractVideos_GUI.printProgress(m_message, m_progress);
 	}
     }
     
