@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 audreyazura
+ * Copyright (C) 2019 Thali
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,6 +17,9 @@
  */
 package extractvideo_GUI;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -25,26 +28,29 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 /**
+ * FXML Controller class
  *
- * @author audreyazura
+ * @author Thali
  */
 public class FXMLDlInfoWindowController
 {
-    @FXML static TextArea consolewindow;
-    @FXML static ProgressBar pbar;
-    @FXML Button closebutton;
+
+     @FXML private TextArea consolewindow;
+     @FXML private ProgressBar pbar;
+//    @FXML Button closebutton;
     
-    static void updateProgress (String message, double progress)
+    void updateProgress (String message, double progress)
     {
-	String currentText = consolewindow.getText();
-	currentText += "\n"+message;
-	consolewindow.setText(currentText);
-	
+//	String currentText = consolewindow.getText();
+//	currentText += "\n"+message;
+	consolewindow.setText(message);
+//	
 	pbar.setProgress(progress);
     }
     
 //    @FXML void closeApp(ActionEvent event)
 //    {
 //	((Stage) closebutton.getScene().getWindow()).close();
-//    }
+//    }    
+    
 }

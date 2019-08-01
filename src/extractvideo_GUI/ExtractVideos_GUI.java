@@ -112,11 +112,15 @@ public class ExtractVideos_GUI extends Application
 	}
     }
     
-    static void initiateDlScene()
+    static FXMLDlInfoWindowController initiateDlScene()
     {
-	try
+	FXMLLoader fxmlDlWindow = new FXMLLoader(ExtractVideos_GUI.class.getResource("FXMLDlInfoWindow.fxml"));
+         FXMLDlInfoWindowController dlWindowController = null;
+        
+        try
 	{
-	    Parent dlFxml = FXMLLoader.load(ExtractVideos_GUI.class.getResource("FXMLDlInfoWindow.fxml"));
+	    Parent dlFxml = fxmlDlWindow.load();
+             dlWindowController = fxmlDlWindow.getController();
 	    mainStage.setScene(new Scene(dlFxml, 800, 600));
 	    mainStage.show();
 	}
@@ -124,10 +128,12 @@ public class ExtractVideos_GUI extends Application
 	{
     	    Logger.getLogger(ExtractVideos_GUI.class.getName()).log(Level.SEVERE, null, ex);
 	}
+        
+        return dlWindowController;
     }
     
-    static public void printProgress(String message, double progress)
-    {
-	FXMLDlInfoWindowController.updateProgress(message, progress);
-    }
+//    static public void printProgress(String message, double progress)
+//    {
+//	FXMLDlInfoWindowController.updateProgress(message, progress);
+//    }
 }

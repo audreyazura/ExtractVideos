@@ -19,10 +19,8 @@ package extractvideos_dlappli;
 
 import extractvideo_GUI.ExtractVideos_GUI;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import static java.lang.Math.log10;
-import java.nio.file.NoSuchFileException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -102,8 +100,8 @@ public class ExtractVideos_DlAppli
 
 			    }
 			    String vidIndex = zeroPrefix + index;
-
-//			    Platform.runLater(new toUpdateGUI("Downloading "+vidIndex+" - "+currentVid.getVideoName(), ((double) index)/((double) videoList.size()-1)));
+                            
+			    Platform.runLater(new toUpdateGUI("Downloading "+vidIndex+" - "+currentVid.getVideoName(), ((double) index)/((double) videoList.size()-1)));
 			    
 			    currentVid.downloadVideo(dlFolder.toString(), vidIndex);
 			    currentVid.makeSub(dlFolder.toString(), vidIndex);
@@ -127,22 +125,24 @@ public class ExtractVideos_DlAppli
 	}
     }
     
-//    static class toUpdateGUI implements Runnable
-//    {
-//	String m_message;
-//	Double m_progress;
-//
-//	private toUpdateGUI (String p_message, double p_progress)
-//	{
-//	    m_message = p_message;
-//	    m_progress = p_progress;
-//	}
-//	
-//	@Override
-//	public void run()
-//	{
+    static class toUpdateGUI implements Runnable
+    {
+	String m_message;
+	Double m_progress;
+
+	private toUpdateGUI (String p_message, double p_progress)
+	{
+	    m_message = p_message;
+	    m_progress = p_progress;
+	}
+	
+	@Override
+	public void run()
+	{
 //	    ExtractVideos_GUI.printProgress(m_message, m_progress);
-//	}
-//    }
+            
+            System.out.println(m_message +"  "+m_progress);
+	}
+    }
     
 }
