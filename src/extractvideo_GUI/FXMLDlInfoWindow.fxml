@@ -19,7 +19,7 @@
               prefHeight="350" fx:id="consolewindow" />
     
     <VBox styleClass="vbox">
-        <Label fx:id="progress" text="Progression totale :" />
+        <Label fx:id="progress" text="Progression des téléchargements :" />
     
         <ProgressBar fx:id="pbar" styleClass="pbar" prefHeight="50" prefWidth="750" />
     </VBox>

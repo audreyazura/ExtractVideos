@@ -104,7 +104,7 @@ public class ExtractVideos_DlAppli
 		Platform.runLater(new toUpdateGUI("Lecture de la base sakuga...\n", 0));
 		videoList = new SakugaDAO(sakugaCSV).getVideoList();
 	    
-		int listSize0 = videoList.size()-1;
+		int listSize0 = videoList.size();
 		int log10ListSize = (int) log10(listSize0);
 		int index = 1;
 		
