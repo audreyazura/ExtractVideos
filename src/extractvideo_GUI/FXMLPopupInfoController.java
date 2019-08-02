@@ -46,7 +46,7 @@ public class FXMLPopupInfoController
     {
 	if (m_redirect)
 	{
-	    ExtractVideos_GUI.backToMainWindow(m_returnAddress);
+	    ExtractVideos_GUI.loadMainWindow(m_returnAddress);
 	}
 	((Stage) okbutton.getScene().getWindow()).close();
     }

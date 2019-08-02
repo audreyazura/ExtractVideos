@@ -46,21 +46,10 @@ public class ExtractVideos_GUI extends Application
     public void start(Stage stage)
     {
 	mainStage = stage;
-	
-	try
-	{
-	    Parent windowFxml = FXMLLoader.load(ExtractVideos_GUI.class.getResource("FXMLMainWindow.fxml"));
-	    mainStage.setTitle("Sakuga Extracter");
-	    mainStage.setScene(new Scene(windowFxml, 800, 600));
-	    mainStage.show();
-	}
-	catch (IOException ex)
-	{
-	    Logger.getLogger(ExtractVideos_GUI.class.getName()).log(Level.SEVERE, null, ex);
-	}
+	loadMainWindow(null);
     }
     
-    public static void backToMainWindow(String address)
+    static void loadMainWindow(String address)
     {
 	FXMLLoader loader = new FXMLLoader(ExtractVideos_GUI.class.getResource("FXMLMainWindow.fxml"));
 	
