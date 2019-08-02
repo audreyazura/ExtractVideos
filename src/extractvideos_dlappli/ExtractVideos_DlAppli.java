@@ -155,7 +155,7 @@ public class ExtractVideos_DlAppli
 		
 		Platform.runLater(() ->
 		{
-		    ExtractVideos_GUI.popupInfo("Le téléchargement des vidéos est terminé! Vous allez être redirigé vers la fenêtre d'acceuil.", null, true);
+		    ExtractVideos_GUI.popupInfo("Le téléchargement des vidéos est terminé! Vous allez être redirigé vers la fenêtre d'acceuil.", "", true);
 		});
 	    }
 	    

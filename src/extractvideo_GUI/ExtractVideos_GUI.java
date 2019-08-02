@@ -46,7 +46,7 @@ public class ExtractVideos_GUI extends Application
     public void start(Stage stage)
     {
 	mainStage = stage;
-	loadMainWindow(null);
+	loadMainWindow("");
     }
     
     static void loadMainWindow(String address)

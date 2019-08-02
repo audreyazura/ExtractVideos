@@ -18,6 +18,7 @@
 package extractvideo_GUI;
 
 import extractvideos_dlappli.ExtractVideos_DlAppli;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.logging.Level;
@@ -47,8 +48,18 @@ public class FXMLMainWindowController
 	browser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Tabulation Separated Value (*.tsv)", "*.tsv"), new FileChooser.ExtensionFilter("All files (*.*)", "*.*"));
 	
 	try
+        {
+            String fieldText = addressfield.getText();
+            browser.setInitialDirectory(new File((new File(fieldText)).getParent()));
+        }
+        catch (NullPointerException ex)
+       {
+               browser.setInitialDirectory(new File(System.getProperty("user.home")));
+         }
+        
+        try
 	{
-	    String fileAdress = browser.showOpenDialog(ExtractVideos_GUI.mainStage).getAbsolutePath();
+             String fileAdress = browser.showOpenDialog(ExtractVideos_GUI.mainStage).getAbsolutePath();
 	    addressfield.setText(fileAdress);
 	}
 	catch (NullPointerException ex)
