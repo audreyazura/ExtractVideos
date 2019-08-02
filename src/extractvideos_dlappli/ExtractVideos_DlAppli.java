@@ -22,6 +22,7 @@ import extractvideo_GUI.ExtractVideos_GUI;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.log10;
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,7 +66,10 @@ public class ExtractVideos_DlAppli
 	    File logFile = new File(sakugaFolder + "/CutsManquant.log");
 	    if (logFile.isFile())
 	    {
-		logFile.renameTo(new File(logFile.getAbsolutePath()+".old"));
+		if (!logFile.delete())
+                {
+                     throw new AccessDeniedException(logFile.getAbsolutePath());
+                }
 	    }
 	    
 	    System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tR %1td/%1$tm/%1$tY] %4$s : %5$s\n");
