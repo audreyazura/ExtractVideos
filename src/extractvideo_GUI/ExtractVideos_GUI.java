@@ -26,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 
 /**
  *
@@ -80,7 +81,8 @@ public class ExtractVideos_GUI extends Application
 	    
 	    popupController.setPopupInfo(infoMessage, fileAddress, redirect);
 	    
-	    infoStage.initOwner(mainStage);
+	    infoStage.initModality(Modality.APPLICATION_MODAL);
+             infoStage.initOwner(mainStage);
 	    infoStage.setTitle("Warning!");
 	    infoStage.setScene(new Scene(infoFxml, 400, 200));
 	    infoStage.showAndWait();
