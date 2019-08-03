@@ -1,7 +1,4 @@
-build.xml
 /build/
 /dist/
 /dist-portable/
 /dist-final/
-/nbproject/private/
-/nbproject/project.properties
