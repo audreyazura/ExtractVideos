@@ -50,7 +50,12 @@ public class ExtractVideos_GUI extends Application
 	loadMainWindow("");
     }
     
-    static void loadMainWindow(String address)
+    /**
+     * Create the starting window of the app
+     * @param p_address The file address to be shown in the address text field
+     *
+     */    
+    static void loadMainWindow(String p_address)
     {
 	FXMLLoader loader = new FXMLLoader(ExtractVideos_GUI.class.getResource("FXMLMainWindow.fxml"));
 	
@@ -58,7 +63,7 @@ public class ExtractVideos_GUI extends Application
 	{
 	    Parent windowFxml = loader.load();
 	    FXMLMainWindowController controller = loader.getController();
-	    controller.setFileAddress(address);
+	    controller.setFileAddress(p_address);
 	    mainStage.setScene(new Scene(windowFxml, 800, 600));
 	    mainStage.show();
 	}
