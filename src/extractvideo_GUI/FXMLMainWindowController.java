@@ -21,6 +21,7 @@ import extractvideos_dlappli.ExtractVideos_DlAppli;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.nio.file.NoSuchFileException;
@@ -101,13 +102,21 @@ public class FXMLMainWindowController
 			m_mainApp.popupInfo("Le fichier de base sakuga ne peut pas être lu correctement.", enteredAddress, true);
 		    });
 		}
-                 catch (AccessDeniedException exAccess)
-                 {
-                     Platform.runLater(() ->
+                catch (AccessDeniedException exAccess)
+                {
+                    Platform.runLater(() ->
 		    {
 			m_mainApp.popupInfo("Erreur lors de l'accès au fichier " + exAccess.getFile(), enteredAddress, true);
 		    });
-                 }
+                }
+                catch (FileAlreadyExistsException exFile)
+                {
+                    Platform.runLater(() ->
+                    {
+                        m_mainApp.popupInfo(exFile.getFile(), enteredAddress, true);
+                    });
+                            
+                }
 		catch (IOException otherEx)
 		{
 		    Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, otherEx);

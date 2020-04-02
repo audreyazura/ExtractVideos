@@ -91,7 +91,7 @@ public class ExtractVideos_GUI extends Application implements WindowsCall
             popupController.setPopupInfo(infoMessage, fileAddress, redirect);
 	    
 	    infoStage.initModality(Modality.APPLICATION_MODAL);
-             infoStage.initOwner(mainStage);
+            infoStage.initOwner(mainStage);
 	    infoStage.setTitle("Warning!");
 	    infoStage.setScene(new Scene(infoFxml, 400, 200));
 	    infoStage.showAndWait();

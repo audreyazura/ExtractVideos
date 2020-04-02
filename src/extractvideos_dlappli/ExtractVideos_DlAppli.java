@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.log10;
 import java.nio.file.AccessDeniedException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,7 +50,7 @@ public class ExtractVideos_DlAppli
      * @throws java.nio.file.FileAlreadyExistsException
      * @throws java.util.zip.DataFormatException
      */
-    public static void extract(String p_fileSakuga) throws IOException, DataFormatException
+    public static void extract(String p_fileSakuga) throws IOException, DataFormatException, FileAlreadyExistsException
     {
 	List<Video> videoList;
 	SimpleFormatter defaultFormatter = new SimpleFormatter();
@@ -84,10 +85,11 @@ public class ExtractVideos_DlAppli
 		
 		if (renameDestination.isDirectory())
 		{
-		    Platform.runLater(() ->
-		    {
-			ExtractVideos_GUI.popupInfo("Les dossiers \"Video\" et \"Video_OLD\" existent déjà dans le dossier de la base sakuga. Veuillez les déplacer pour éviter une perte de données, puis relancer le téléchargement.", p_fileSakuga, true);
-		    });
+                    throw new FileAlreadyExistsException("Les dossiers \"Video\" et \"Video_OLD\" existent déjà dans le dossier de la base sakuga. Veuillez les déplacer pour éviter une perte de données, puis relancer le téléchargement.");
+//		    Platform.runLater(() ->
+//		    {
+//			ExtractVideos_GUI.popupInfo("Les dossiers \"Video\" et \"Video_OLD\" existent déjà dans le dossier de la base sakuga. Veuillez les déplacer pour éviter une perte de données, puis relancer le téléchargement.", p_fileSakuga, true);
+//		    });
 		}
 		else
 		{
