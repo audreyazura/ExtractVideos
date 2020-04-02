@@ -39,6 +39,7 @@ import javafx.stage.FileChooser;
 public class FXMLMainWindowController
 {
     @FXML private TextField addressfield;
+    private WindowsCall m_mainApp;
     
     @FXML private void browsingStart(ActionEvent event)
     {
@@ -53,18 +54,18 @@ public class FXMLMainWindowController
             browser.setInitialDirectory(new File((new File(fieldText)).getParent()));
         }
         catch (NullPointerException ex)
-       {
-               browser.setInitialDirectory(new File(System.getProperty("user.home")));
-         }
+        {
+            browser.setInitialDirectory(new File(System.getProperty("user.home")));
+        }
         
         try
 	{
-             String fileAdress = browser.showOpenDialog(ExtractVideos_GUI.mainStage).getAbsolutePath();
-	    addressfield.setText(fileAdress);
+            String fileAdress = browser.showOpenDialog(ExtractVideos_GUI.mainStage).getAbsolutePath();
+            addressfield.setText(fileAdress);
 	}
 	catch (NullPointerException ex)
 	{
-	   ExtractVideos_GUI.popupInfo("Entrez l'adresse du fichier.", "", false);
+	   m_mainApp.popupInfo("Entrez l'adresse du fichier.", "", false);
 	}
     }
     
@@ -74,12 +75,12 @@ public class FXMLMainWindowController
 	
 	if (enteredAddress == null || enteredAddress.equals(""))
 	{
-    	   ExtractVideos_GUI.popupInfo("Entrez l'adresse du fichier.", "", false);
+    	   m_mainApp.popupInfo("Entrez l'adresse du fichier.", "", false);
 	}
 	else
 	{
-	    ExtractVideos_GUI.initiateDlScene();
-	    //to refactor with a uncaughtExceptionHandler for popupCritical?
+	    m_mainApp.initiateDlScene();
+	    //to refactor with an uncaughtExceptionHandler for popupCritical?
 	    new Thread(() ->
 	    {
 		try
@@ -90,21 +91,21 @@ public class FXMLMainWindowController
 		{
 		    Platform.runLater(() ->
 		    {
-			ExtractVideos_GUI.popupInfo("Le fichier entré ne peut pas être trouvé.", enteredAddress, true);
+			m_mainApp.popupInfo("Le fichier entré ne peut pas être trouvé.", enteredAddress, true);
 		    });
 		}
 		catch (DataFormatException exData)
 		{
 		    Platform.runLater(() ->
 		    {
-			ExtractVideos_GUI.popupInfo("Le fichier de base sakuga ne peut pas être lu correctement.", enteredAddress, true);
+			m_mainApp.popupInfo("Le fichier de base sakuga ne peut pas être lu correctement.", enteredAddress, true);
 		    });
 		}
                  catch (AccessDeniedException exAccess)
                  {
                      Platform.runLater(() ->
 		    {
-			ExtractVideos_GUI.popupInfo("Erreur lors de l'accès au fichier " + exAccess.getFile(), enteredAddress, true);
+			m_mainApp.popupInfo("Erreur lors de l'accès au fichier " + exAccess.getFile(), enteredAddress, true);
 		    });
                  }
 		catch (IOException otherEx)
@@ -113,6 +114,11 @@ public class FXMLMainWindowController
 		}
 	    }).start();
 	}
+    }
+    
+    void setMainApp (WindowsCall p_App)
+    {
+        m_mainApp = p_App;
     }
     
     void setFileAddress (String address)

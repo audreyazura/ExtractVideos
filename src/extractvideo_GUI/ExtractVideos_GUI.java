@@ -32,7 +32,7 @@ import javafx.stage.Modality;
  *
  * @author audreyazura
  */
-public class ExtractVideos_GUI extends Application
+public class ExtractVideos_GUI extends Application implements WindowsCall
 {
     static Stage mainStage;
     static private FXMLDlInfoWindowController dlWindowController;
@@ -55,7 +55,8 @@ public class ExtractVideos_GUI extends Application
      * @param p_address The file address to be shown in the address text field
      *
      */    
-    static void loadMainWindow(String p_address)
+    @Override
+    public void loadMainWindow(String p_address)
     {
 	FXMLLoader loader = new FXMLLoader(ExtractVideos_GUI.class.getResource("FXMLMainWindow.fxml"));
 	
@@ -63,6 +64,7 @@ public class ExtractVideos_GUI extends Application
 	{
 	    Parent windowFxml = loader.load();
 	    FXMLMainWindowController controller = loader.getController();
+            controller.setMainApp(this);
 	    controller.setFileAddress(p_address);
 	    mainStage.setScene(new Scene(windowFxml, 800, 600));
 	    mainStage.show();
@@ -73,7 +75,8 @@ public class ExtractVideos_GUI extends Application
 	}
     }
     
-    public static void popupInfo(String infoMessage, String fileAddress, boolean redirect)
+    @Override
+    public void popupInfo(String infoMessage, String fileAddress, boolean redirect)
     {
 	
 	Stage infoStage = new Stage();
@@ -84,7 +87,8 @@ public class ExtractVideos_GUI extends Application
 	    Parent infoFxml = fxmlLoader.load();
 	    FXMLPopupInfoController popupController = fxmlLoader.getController();
 	    
-	    popupController.setPopupInfo(infoMessage, fileAddress, redirect);
+	    popupController.setMainApp(this);
+            popupController.setPopupInfo(infoMessage, fileAddress, redirect);
 	    
 	    infoStage.initModality(Modality.APPLICATION_MODAL);
              infoStage.initOwner(mainStage);
@@ -99,7 +103,8 @@ public class ExtractVideos_GUI extends Application
 	}
     }
     
-    static void initiateDlScene()
+    @Override
+    public void initiateDlScene()
     {
 	FXMLLoader fxmlDlWindow = new FXMLLoader(ExtractVideos_GUI.class.getResource("FXMLDlInfoWindow.fxml"));
         
@@ -116,7 +121,7 @@ public class ExtractVideos_GUI extends Application
 	}
     }
     
-    static public void printProgress(String message, double progress)
+    public void printProgress(String message, double progress)
     {
 	dlWindowController.updateProgress(message, progress);
     }

@@ -34,6 +34,7 @@ public class FXMLPopupInfoController
     @FXML private Button okbutton;
     private String m_returnAddress;
     private boolean m_redirect;
+    private WindowsCall m_mainApp;
     
     void setPopupInfo(String message, String p_returnAddress, boolean p_redirect)
     {
@@ -42,11 +43,16 @@ public class FXMLPopupInfoController
 	m_redirect = p_redirect;
     }
     
+    void setMainApp(WindowsCall p_App)
+    {
+        m_mainApp = p_App;
+    }
+    
     @FXML synchronized void closePopup(ActionEvent event)
     {
 	if (m_redirect)
 	{
-	    ExtractVideos_GUI.loadMainWindow(m_returnAddress);
+	    m_mainApp.loadMainWindow(m_returnAddress);
 	}
 	((Stage) okbutton.getScene().getWindow()).close();
     }
