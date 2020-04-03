@@ -170,7 +170,7 @@ public class ExtractVideos_DlAppli
 	}
     }
     
-    static class toUpdateGUI implements Runnable
+    private class toUpdateGUI implements Runnable
     {
 	String m_message;
 	Double m_progress;
