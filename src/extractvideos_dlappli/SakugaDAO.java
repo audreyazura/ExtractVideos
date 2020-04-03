@@ -26,7 +26,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.Logger;
 import java.util.zip.DataFormatException;
 
 /**
@@ -47,9 +47,9 @@ public class SakugaDAO
      * @throws MalformedURLException
      * @throws java.util.zip.DataFormatException
      */
-    public SakugaDAO(File p_fileBase) throws FileNotFoundException, IOException, MalformedURLException, DataFormatException
+    public SakugaDAO(File p_fileBase, Logger p_logger) throws FileNotFoundException, IOException, MalformedURLException, DataFormatException
     {
-	BufferedReader sakugaRead = new BufferedReader(new FileReader(p_fileBase));
+        BufferedReader sakugaRead = new BufferedReader(new FileReader(p_fileBase));
 	
 	String line;
 	while (((line = sakugaRead.readLine()) != null))
@@ -75,7 +75,7 @@ public class SakugaDAO
 		    link = new URL(cutSplit[3]);
 		}
 
-		m_videoList.add(new Video(cutSplit[1], cutSplit[0], link));
+		m_videoList.add(new Video(cutSplit[1], cutSplit[0], link, p_logger));
 	    }
 	}
 	

@@ -17,8 +17,6 @@
  */
 package extractvideos_dlappli;
 
-import extractvideo_GUI.ExtractVideos_GUI;
-
 import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.log10;
@@ -40,7 +38,7 @@ import javafx.application.Platform;
 public class ExtractVideos_DlAppli
 {
 
-   final static Logger CUTINFOLOGGER = Logger.getLogger(ExtractVideos_DlAppli.class.getName());
+    private final Logger m_cutInfoLogger = Logger.getLogger(ExtractVideos_DlAppli.class.getName());
     
     /**
      * Main function of the package, coordinating the video downloading from the
@@ -50,7 +48,7 @@ public class ExtractVideos_DlAppli
      * @throws java.nio.file.FileAlreadyExistsException
      * @throws java.util.zip.DataFormatException
      */
-    public static void extract(String p_fileSakuga) throws IOException, DataFormatException, FileAlreadyExistsException
+    public void extract(String p_fileSakuga, GUICallBack p_callBack) throws IOException, DataFormatException, FileAlreadyExistsException
     {
 	List<Video> videoList;
 	SimpleFormatter defaultFormatter = new SimpleFormatter();
@@ -77,7 +75,7 @@ public class ExtractVideos_DlAppli
 	    FileHandler missingCutHandler = new FileHandler(sakugaFolder + "/CutsManquant.log");
 	    SimpleFormatter missingCutFormatter = new SimpleFormatter();
 	    missingCutHandler.setFormatter(missingCutFormatter);
-	    CUTINFOLOGGER.addHandler(missingCutHandler);
+	    m_cutInfoLogger.addHandler(missingCutHandler);
 	    
 	    if (dlFolder.isDirectory())
 	    {
@@ -95,7 +93,7 @@ public class ExtractVideos_DlAppli
 		{
 		    Platform.runLater(() ->
 		    {
-			ExtractVideos_GUI.popupInfo("Un dossier \"Video\" a été trouvé dans le dossier de la base sakuga. Il a été renommé en Video_OLD.", "", false);
+			p_callBack.popupInfo("Un dossier \"Video\" a été trouvé dans le dossier de la base sakuga. Il a été renommé en Video_OLD.", "", false);
 		    });
 		    dlFolder.renameTo(renameDestination);
 		}
@@ -103,8 +101,8 @@ public class ExtractVideos_DlAppli
 	    
 	    if (dlFolder.mkdir())
 	    {
-		Platform.runLater(new toUpdateGUI("Lecture de la base sakuga...\n", 0));
-		videoList = new SakugaDAO(sakugaCSV).getVideoList();
+		Platform.runLater(new toUpdateGUI("Lecture de la base sakuga...\n", 0, p_callBack));
+		videoList = new SakugaDAO(sakugaCSV, m_cutInfoLogger).getVideoList();
 	    
 		int listSize0 = videoList.size();
 		int log10ListSize = (int) log10(listSize0);
@@ -114,7 +112,7 @@ public class ExtractVideos_DlAppli
 		{
 		    int lIndex = videoList.indexOf(currentVid);
                      
-		    Platform.runLater(new toUpdateGUI("Téléchargement de "+currentVid.getVideoName()+"...", ((double) lIndex)/((double) listSize0)));
+		    Platform.runLater(new toUpdateGUI("Téléchargement de "+currentVid.getVideoName()+"...", ((double) lIndex)/((double) listSize0), p_callBack));
 		   
 		    if (currentVid.toDownload())
 		    {
@@ -135,29 +133,29 @@ public class ExtractVideos_DlAppli
 
 			if (lIndex <= listSize0-1)
 			{
-			    Platform.runLater(new toUpdateGUI("Video "+vidIndex+" - "+currentVid.getVideoName()+" téléchargée.\n", ((double) lIndex+1)/((double) listSize0)));
+			    Platform.runLater(new toUpdateGUI("Video "+vidIndex+" - "+currentVid.getVideoName()+" téléchargée.\n", ((double) lIndex+1)/((double) listSize0), p_callBack));
 			}
 			else
 			{
-			    Platform.runLater(new toUpdateGUI("Video "+vidIndex+" - "+currentVid.getVideoName()+" téléchargée.\n", ((double) lIndex)/((double) listSize0)));
+			    Platform.runLater(new toUpdateGUI("Video "+vidIndex+" - "+currentVid.getVideoName()+" téléchargée.\n", ((double) lIndex)/((double) listSize0), p_callBack));
 			}
 		    }
 		    else
 		    {
 			if (lIndex <= listSize0-1)
 			{
-			    Platform.runLater(new toUpdateGUI("Problème avec le téléchargement de la vidéo "+currentVid.getVideoName()+". L'évènement a été entré dans le log.\n", ((double) lIndex+1)/((double) listSize0)));
+			    Platform.runLater(new toUpdateGUI("Problème avec le téléchargement de la vidéo "+currentVid.getVideoName()+". L'évènement a été entré dans le log.\n", ((double) lIndex+1)/((double) listSize0), p_callBack));
 			}
 			else
 			{
-			    Platform.runLater(new toUpdateGUI("Problème avec le téléchargement de la vidéo "+currentVid.getVideoName()+". L'évènement a été entré dans le log.\n", ((double) lIndex)/((double) listSize0)));
+			    Platform.runLater(new toUpdateGUI("Problème avec le téléchargement de la vidéo "+currentVid.getVideoName()+". L'évènement a été entré dans le log.\n", ((double) lIndex)/((double) listSize0), p_callBack));
 			}
 		    }
 		}
 		
 		Platform.runLater(() ->
 		{
-		    ExtractVideos_GUI.popupInfo("Le téléchargement des vidéos est terminé! Vous allez être redirigé vers la fenêtre d'acceuil.", "", true);
+		    p_callBack.popupInfo("Le téléchargement des vidéos est terminé! Vous allez être redirigé vers la fenêtre d'acceuil.", "", true);
 		});
 	    }
 	    
@@ -176,17 +174,19 @@ public class ExtractVideos_DlAppli
     {
 	String m_message;
 	Double m_progress;
+        GUICallBack m_windowCallBack;
 
-	private toUpdateGUI (String p_message, double p_progress)
+	private toUpdateGUI (String p_message, double p_progress, GUICallBack p_callBack)
 	{
 	    m_message = p_message;
 	    m_progress = p_progress;
+            m_windowCallBack = p_callBack;
 	}
 	
 	@Override
 	public void run()
 	{
-	    ExtractVideos_GUI.printProgress(m_message, m_progress);
+	    m_windowCallBack.printProgress(m_message, m_progress);
 	}
     }
     

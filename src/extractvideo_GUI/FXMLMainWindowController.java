@@ -17,7 +17,6 @@
  */
 package extractvideo_GUI;
 
-import extractvideos_dlappli.ExtractVideos_DlAppli;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
@@ -32,6 +31,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
+import extractvideos_dlappli.ExtractVideos_DlAppli;
+import extractvideos_dlappli.GUICallBack;
+
 /**
  * FXML Controller class
  *
@@ -41,6 +43,7 @@ public class FXMLMainWindowController
 {
     @FXML private TextField addressfield;
     private WindowsCall m_mainApp;
+    private GUICallBack m_GUIApp;
     
     @FXML private void browsingStart(ActionEvent event)
     {
@@ -61,7 +64,7 @@ public class FXMLMainWindowController
         
         try
 	{
-            String fileAdress = browser.showOpenDialog(ExtractVideos_GUI.mainStage).getAbsolutePath();
+            String fileAdress = browser.showOpenDialog(m_mainApp.getMainStage()).getAbsolutePath();
             addressfield.setText(fileAdress);
 	}
 	catch (NullPointerException ex)
@@ -86,7 +89,8 @@ public class FXMLMainWindowController
 	    {
 		try
 		{
-		    ExtractVideos_DlAppli.extract(enteredAddress);
+		    ExtractVideos_DlAppli dlApp = new ExtractVideos_DlAppli();
+                    dlApp.extract(enteredAddress, m_GUIApp);
 		}
 		catch (NoSuchFileException | NullPointerException exNoFile)
 		{
@@ -125,9 +129,10 @@ public class FXMLMainWindowController
 	}
     }
     
-    void setMainApp (WindowsCall p_App)
+    void setMainApp (ExtractVideos_GUI p_App)
     {
         m_mainApp = p_App;
+        m_GUIApp = p_App;
     }
     
     void setFileAddress (String address)

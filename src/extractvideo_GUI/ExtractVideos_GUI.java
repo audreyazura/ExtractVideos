@@ -28,16 +28,18 @@ import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 
+import extractvideos_dlappli.GUICallBack;
+
 /**
  *
  * @author audreyazura
  */
-public class ExtractVideos_GUI extends Application implements WindowsCall
+public class ExtractVideos_GUI extends Application implements WindowsCall, GUICallBack
 {
-    static Stage mainStage;
-    static private FXMLDlInfoWindowController dlWindowController;
+    private Stage mainStage;
+    private FXMLDlInfoWindowController dlWindowController;
     
-    static void startSakugaGUI(String[] args)
+    void startSakugaGUI(String[] args)
     {
 	Font.loadFont(ExtractVideos_GUI.class.getResource("URWPalladioL-Roma.ttf").toExternalForm(), 10);
 	launch(args);
@@ -121,8 +123,15 @@ public class ExtractVideos_GUI extends Application implements WindowsCall
 	}
     }
     
+    @Override
     public void printProgress(String message, double progress)
     {
 	dlWindowController.updateProgress(message, progress);
+    }
+    
+    @Override
+    public Stage getMainStage()
+    {
+        return mainStage;
     }
 }

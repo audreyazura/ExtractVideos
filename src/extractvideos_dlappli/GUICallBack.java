@@ -15,18 +15,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package extractvideo_GUI;
-
-import javafx.stage.Stage;
+package extractvideos_dlappli;
 
 /**
  *
  * @author audreyazura
  */
-interface WindowsCall
+public interface GUICallBack
 {
-    void loadMainWindow(String p_address);
-    void popupInfo(String infoMessage, String fileAddress, boolean redirect);
-    void initiateDlScene();
-    Stage getMainStage();
+    public void popupInfo(String infoMessage, String fileAddress, boolean redirect);
+    public void printProgress(String message, double progress);
 }
