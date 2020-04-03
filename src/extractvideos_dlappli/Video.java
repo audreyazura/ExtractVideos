@@ -30,7 +30,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.logging.Logger;
 
 /**
  * Class representing a given video from the database file
@@ -40,7 +39,6 @@ public class Video
 {
     private final String m_videoID;
     private final URL m_link;
-    private final Logger m_messageLogger;
     
     /**
      * Construct the video from the elements found the in the sakuga base file
@@ -50,11 +48,11 @@ public class Video
      * @throws	IOException
      * @throws	MalformedURLException
      */
-    public Video (String p_authors, String p_anime, URL p_page, Logger p_logger) throws MalformedURLException, IOException
+//    public Video (String p_authors, String p_anime, URL p_page, Logger p_logger) throws MalformedURLException, IOException
+    public Video (String p_authors, String p_anime, URL p_page) throws MalformedURLException, IOException
     {
 	m_videoID = p_authors + " (" + p_anime + ")";
 	m_link = findLink(p_page);
-        m_messageLogger = p_logger;
     }
     
     /**
@@ -98,7 +96,7 @@ public class Video
 	    catch (FileNotFoundException err)
 	    {
 //		ExtractVideos_DlAppli.cutInfoLogger.info("No file found for the cut " + m_videoID + " at link: " + p_link);
-		m_messageLogger.info(p_link + "\tFichier non trouve : " + m_videoID);
+                ExtractVideos_DlAppli.CUTINFOLOGGER.info(p_link + "\tFichier non trouve : " + m_videoID);
 	    }
 	} 
 	else //the video link is passed as a non-booru link
@@ -112,7 +110,7 @@ public class Video
 	    }
 	    else
 	    {
-		m_messageLogger.info(p_link + "\tFichier non trouve : " + m_videoID);
+                ExtractVideos_DlAppli.CUTINFOLOGGER.info(p_link + "\tFichier non trouve : " + m_videoID);
 	    }
 	}
 	
@@ -146,12 +144,12 @@ public class Video
 	    } 
 	    catch (FileNotFoundException notFoundErr)
 	    {
-		m_messageLogger.info(m_link.toString() + "\tFichier non trouve : " + m_videoID);
+                ExtractVideos_DlAppli.CUTINFOLOGGER.info(m_link.toString() + "\tFichier non trouve : " + m_videoID);
 	    }	
 	}
 	else
 	{
-	    m_messageLogger.info(m_link.toString() + "\tL'extension de la video ne peut etre determine");
+            ExtractVideos_DlAppli.CUTINFOLOGGER.info(m_link.toString() + "\tL'extension de la video ne peut etre determine");
 //	    throw new IOException("Video type cannot be found in link:" + m_link.toString());
 	}
     }

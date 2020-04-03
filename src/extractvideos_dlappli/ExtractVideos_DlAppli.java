@@ -38,7 +38,7 @@ import javafx.application.Platform;
 public class ExtractVideos_DlAppli
 {
 
-    private final Logger m_cutInfoLogger = Logger.getLogger(ExtractVideos_DlAppli.class.getName());
+    static final Logger CUTINFOLOGGER = Logger.getLogger(ExtractVideos_DlAppli.class.getName());
     
     /**
      * Main function of the package, coordinating the video downloading from the
@@ -75,7 +75,7 @@ public class ExtractVideos_DlAppli
 	    FileHandler missingCutHandler = new FileHandler(sakugaFolder + "/CutsManquant.log");
 	    SimpleFormatter missingCutFormatter = new SimpleFormatter();
 	    missingCutHandler.setFormatter(missingCutFormatter);
-	    m_cutInfoLogger.addHandler(missingCutHandler);
+	    CUTINFOLOGGER.addHandler(missingCutHandler);
 	    
 	    if (dlFolder.isDirectory())
 	    {
@@ -102,7 +102,7 @@ public class ExtractVideos_DlAppli
 	    if (dlFolder.mkdir())
 	    {
 		Platform.runLater(new toUpdateGUI("Lecture de la base sakuga...\n", 0, p_callBack));
-		videoList = new SakugaDAO(sakugaCSV, m_cutInfoLogger).getVideoList();
+                videoList = new SakugaDAO(sakugaCSV).getVideoList();
 	    
 		int listSize0 = videoList.size();
 		int log10ListSize = (int) log10(listSize0);
@@ -170,7 +170,7 @@ public class ExtractVideos_DlAppli
 	}
     }
     
-    private class toUpdateGUI implements Runnable
+    static class toUpdateGUI implements Runnable
     {
 	String m_message;
 	Double m_progress;
