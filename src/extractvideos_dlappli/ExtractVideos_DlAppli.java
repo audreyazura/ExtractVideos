@@ -39,6 +39,15 @@ public class ExtractVideos_DlAppli
 {
 
     static final Logger CUTINFOLOGGER = Logger.getLogger(ExtractVideos_DlAppli.class.getName());
+    static final Logger ERRLOGGER = Logger.getLogger(ExtractVideos_DlAppli.class.getName()+"stopExecLogger");
+    static final SimpleFormatter defaultFormatter = new SimpleFormatter();
+    
+    public ExtractVideos_DlAppli()
+    {
+        ConsoleHandler errHandler = new ConsoleHandler();
+	errHandler.setFormatter(defaultFormatter);
+	ERRLOGGER.addHandler(errHandler);
+    }
     
     /**
      * Main function of the package, coordinating the video downloading from the
@@ -51,9 +60,6 @@ public class ExtractVideos_DlAppli
     public void extract(String p_fileSakuga, GUICallBack p_callBack) throws IOException, DataFormatException, FileAlreadyExistsException
     {
 	List<Video> videoList;
-	SimpleFormatter defaultFormatter = new SimpleFormatter();
-	
-	
 	
 	try
 	{
@@ -162,11 +168,7 @@ public class ExtractVideos_DlAppli
 	}
 	catch (SecurityException | IllegalArgumentException ex)
 	{
-	    Logger errLogger = Logger.getLogger(ExtractVideos_DlAppli.class.getName()+"stopExecLogger");
-	    ConsoleHandler errHandler = new ConsoleHandler();
-	    errHandler.setFormatter(defaultFormatter);
-	    errLogger.addHandler(errHandler);
-	    errLogger.log(Level.SEVERE, null, ex);
+	    ERRLOGGER.log(Level.SEVERE, null, ex);
 	}
     }
     
