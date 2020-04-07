@@ -82,12 +82,12 @@ public class SakugaDAO
     }
     
     /**
-     * Send the Array List constructed from the user selected file
+     * Send a copy of the Array List constructed from the user selected file
      * @return the constructed Array List of Video
      */
     public List<Video> getVideoList()
     {
-	return m_videoList;
+	return List.copyOf(m_videoList);
     }
     
 }
