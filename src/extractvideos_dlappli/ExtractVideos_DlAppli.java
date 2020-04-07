@@ -53,11 +53,12 @@ public class ExtractVideos_DlAppli
      * Main function of the package, coordinating the video downloading from the
      * database passed.
      * @param p_fileSakuga the address of the sakuga base
+     * @param p_callBack the callback toward the application GUI to update it
      * @throws java.nio.file.NoSuchFileException
      * @throws java.nio.file.FileAlreadyExistsException
      * @throws java.util.zip.DataFormatException
      */
-    public void extract(String p_fileSakuga, GUICallBack p_callBack) throws IOException, DataFormatException, FileAlreadyExistsException
+    public void extract(String p_fileSakuga, GUICallBack p_callBack) throws IOException, DataFormatException
     {
 	List<Video> videoList;
 	
@@ -118,7 +119,8 @@ public class ExtractVideos_DlAppli
 		{
 		    int lIndex = videoList.indexOf(currentVid);
                      
-		    Platform.runLater(new toUpdateGUI("Téléchargement de "+currentVid.getVideoName()+"...", ((double) lIndex)/((double) listSize0), p_callBack));
+		    //put the toUpdateGUI call from here in the Video class (or VideoDownloader)
+                    Platform.runLater(new toUpdateGUI("Téléchargement de "+currentVid.getVideoName()+"...", ((double) lIndex)/((double) listSize0), p_callBack));
 		   
 		    if (currentVid.toDownload())
 		    {
@@ -132,7 +134,8 @@ public class ExtractVideos_DlAppli
 			}
 			String vidIndex = zeroPrefix + index;
 
-			currentVid.downloadVideo(dlFolder.toString(), vidIndex);
+			//make it run in its own thread
+                        currentVid.downloadVideo(dlFolder.toString(), vidIndex);
 			currentVid.makeSub(dlFolder.toString(), vidIndex);
 
 			index += 1;
@@ -172,6 +175,7 @@ public class ExtractVideos_DlAppli
 	}
     }
     
+    //make it its own that will be called here and in Video (or VideoDownloader)
     private class toUpdateGUI implements Runnable
     {
 	String m_message;

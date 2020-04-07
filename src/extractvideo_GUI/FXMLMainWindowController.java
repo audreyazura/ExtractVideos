@@ -85,6 +85,7 @@ public class FXMLMainWindowController
 	{
 	    m_mainApp.initiateDlScene();
 	    //to refactor with an uncaughtExceptionHandler for popupCritical?
+            //If each Video is downloaded in its own thread, it may not be necessary to run ExtractVideos_dlAppli in its own thread
 	    new Thread(() ->
 	    {
 		try

@@ -48,7 +48,8 @@ public class Video
      * @throws	IOException
      * @throws	MalformedURLException
      */
-//    public Video (String p_authors, String p_anime, URL p_page, Logger p_logger) throws MalformedURLException, IOException
+//To rename VideoDownloader (or separate Video and VideoDownloader in two classes) and make it runnable so it can be worked in different thread
+//Add here the logger CUTINFOLOGGER and make it call toUpdateGUI directly here
     public Video (String p_authors, String p_anime, URL p_page) throws MalformedURLException, IOException
     {
 	m_videoID = p_authors + " (" + p_anime + ")";
@@ -124,6 +125,7 @@ public class Video
      * @param	p_videoIndex	the formatted index of the video. Used to correctly name the video file
      * @throws IOException
      */
+    //Make it synchronize so it can be run in new threads (put it in its own class?)
     public void downloadVideo (String p_Folder, String p_videoIndex) throws IOException
     {
 	
@@ -188,6 +190,7 @@ public class Video
     
     String getVideoName()
     {
-	return m_videoID;
+	//no need of copy since String is unmodifiable
+        return m_videoID;
     }
 }
