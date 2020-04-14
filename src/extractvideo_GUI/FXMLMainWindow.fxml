@@ -15,7 +15,7 @@
       styleClass="vbox" fx:id="mainbox" >
     
     <stylesheets>
-        <URL value="@WindowStyle.css" />
+        <URL value="@WindowsStyle.css" />
     </stylesheets>    
     
     <VBox styleClass="vbox">    

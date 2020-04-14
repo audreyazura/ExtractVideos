@@ -12,7 +12,7 @@
       styleClass="vbox" fx:id="dlwindowbox">
         
     <stylesheets>
-        <URL value="@WindowStyle.css" />
+        <URL value="@WindowsStyle.css" />
     </stylesheets>
     
     <TextArea wrapText="true"

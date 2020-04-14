@@ -9,7 +9,7 @@
 <VBox styleClass="vbox" fx:id="popupbox" fx:controller="extractvideo_GUI.FXMLPopupInfoController" xmlns:fx="http://javafx.com/fxml">
     
     <stylesheets>
-        <URL value="@WindowStyle.css" />
+        <URL value="@WindowsStyle.css" />
     </stylesheets>
     
      <Label prefHeight="100" fx:id="popuptext"/>
