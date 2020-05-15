@@ -62,15 +62,15 @@ public class FXMLMainWindowController
             browser.setInitialDirectory(new File(System.getProperty("user.home")));
         }
         
-        try
-	{
-            String fileAdress = browser.showOpenDialog(m_mainApp.getMainStage()).getAbsolutePath();
-            addressfield.setText(fileAdress);
-	}
-	catch (NullPointerException ex)
-	{
-	   m_mainApp.popupInfo("Entrez l'adresse du fichier.", "", false);
-	}
+        File selectedFile = browser.showOpenDialog(m_mainApp.getMainStage());
+        if (selectedFile != null)
+        {
+            addressfield.setText(selectedFile.getAbsolutePath());
+        }
+        else
+        {
+            addressfield.setText("");
+        }
     }
     
     @FXML private void dlStart(ActionEvent event)
