@@ -19,7 +19,6 @@ package extractvideo_GUI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 
@@ -31,8 +30,8 @@ import javafx.scene.control.TextArea;
 public class FXMLDlInfoWindowController
 {
 
-     @FXML private TextArea consolewindow;
-     @FXML private ProgressBar pbar;
+    @FXML private TextArea consolewindow;
+    @FXML private ProgressBar pbar;
     
     void updateProgress (String message, double progress)
     {
@@ -45,6 +44,5 @@ public class FXMLDlInfoWindowController
     @FXML void closeApp(ActionEvent event)
     {
 	System.exit(0);
-    }    
-    
+    }
 }

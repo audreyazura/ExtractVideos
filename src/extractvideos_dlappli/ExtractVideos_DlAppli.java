@@ -166,8 +166,7 @@ public class ExtractVideos_DlAppli
 		{
 		    p_callBack.popupInfo("Le téléchargement des vidéos est terminé! Vous allez être redirigé vers la fenêtre d'acceuil.", "", true);
 		});
-	    }
-	    
+	    }  
 	}
 	catch (SecurityException | IllegalArgumentException ex)
 	{
