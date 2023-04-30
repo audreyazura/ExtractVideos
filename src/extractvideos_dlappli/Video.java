@@ -131,7 +131,7 @@ public class Video
 	
 	Matcher fileTypeMatcher = Pattern.compile("(m|w)(p|e)(4|bm)").matcher(m_link.getPath());
 
-	//if there is no file extension in the video link, there is a problem, and we raise an extension if it happens
+	//if there is no file extension in the video link, there is a problem, and we raise an exxception if it happens
 	if (fileTypeMatcher.find())
 	{
 	    String fileLink = p_Folder + "/" + p_videoIndex + " - " + m_videoID + "." + fileTypeMatcher.group();

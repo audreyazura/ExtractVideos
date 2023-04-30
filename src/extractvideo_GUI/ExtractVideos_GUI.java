@@ -69,6 +69,7 @@ public class ExtractVideos_GUI extends Application implements WindowsCall, GUICa
             controller.setMainApp(this);
 	    controller.setFileAddress(p_address);
 	    mainStage.setScene(new Scene(windowFxml, 800, 600));
+            mainStage.setTitle("Extract Sakuga");
 	    mainStage.show();
 	}
 	catch (IOException ex)

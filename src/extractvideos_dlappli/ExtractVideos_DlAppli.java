@@ -58,7 +58,7 @@ public class ExtractVideos_DlAppli
      * @throws java.nio.file.FileAlreadyExistsException
      * @throws java.util.zip.DataFormatException
      */
-    public void extract(String p_fileSakuga, GUICallBack p_callBack) throws IOException, DataFormatException
+    public void extract(Boolean doDL, GUICallBack p_callBack, String p_fileSakuga) throws IOException, DataFormatException
     {
 	List<Video> videoList;
 	
@@ -135,8 +135,11 @@ public class ExtractVideos_DlAppli
 			String vidIndex = zeroPrefix + index;
 
 			//make it run in its own thread
-                        currentVid.downloadVideo(dlFolder.toString(), vidIndex);
-			currentVid.makeSub(dlFolder.toString(), vidIndex);
+                        if (doDL)
+                        {
+                            currentVid.downloadVideo(dlFolder.toString(), vidIndex);
+                            currentVid.makeSub(dlFolder.toString(), vidIndex);
+                        }
 
 			index += 1;
 

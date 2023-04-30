@@ -33,6 +33,7 @@ import javafx.stage.FileChooser;
 
 import extractvideos_dlappli.ExtractVideos_DlAppli;
 import extractvideos_dlappli.GUICallBack;
+import javafx.scene.control.CheckBox;
 
 /**
  * FXML Controller class
@@ -41,6 +42,7 @@ import extractvideos_dlappli.GUICallBack;
  */
 public class FXMLMainWindowController
 {
+    @FXML private CheckBox doDLBox;
     @FXML private TextField addressfield;
     private WindowsCall m_mainApp;
     private GUICallBack m_GUIApp;
@@ -91,7 +93,7 @@ public class FXMLMainWindowController
 		try
 		{
 		    ExtractVideos_DlAppli dlApp = new ExtractVideos_DlAppli();
-                    dlApp.extract(enteredAddress, m_GUIApp);
+                    dlApp.extract(doDLBox.isSelected(), m_GUIApp, enteredAddress);
 		}
 		catch (NoSuchFileException | NullPointerException exNoFile)
 		{
