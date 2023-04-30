@@ -79,13 +79,18 @@ public class Video
 	    {
 		BufferedReader booruPage = new BufferedReader(new InputStreamReader(p_link.openStream()));
 		Pattern videoLinkPatttern = Pattern.compile("https://sakugabooru.com/data/[a-z0-9]*.(m|w)(p|e)(4|bm)");
+                Pattern videoDeletedPattern = Pattern.compile("This post was deleted.");
 	
 		String dataLine;
-		boolean foundAddress = false;
-		while (((dataLine = booruPage.readLine()) != null) && !(foundAddress))
+		while (((dataLine = booruPage.readLine()) != null))
 		{
-		    Matcher linkMatcher = videoLinkPatttern.matcher(dataLine);
-		    if (foundAddress = linkMatcher.find())
+		    if (videoDeletedPattern.matcher(dataLine).find())
+                    {
+                        throw new FileNotFoundException();
+                    }
+                    
+                    Matcher linkMatcher = videoLinkPatttern.matcher(dataLine);
+		    if (linkMatcher.find())
 		    {
 			videoLink = new URL(linkMatcher.group());
 		    }
