@@ -41,7 +41,7 @@ public class ExtractVideos_GUI extends Application implements WindowsCall, GUICa
     
     void startSakugaGUI(String[] args)
     {
-	Font.loadFont(ExtractVideos_GUI.class.getResource("URWPalladioL-Roma.ttf").toExternalForm(), 10);
+	Font.loadFont(ExtractVideos_GUI.class.getResource("Jost-400-Book.otf").toExternalForm(), 10);
 	launch(args);
     }
     
