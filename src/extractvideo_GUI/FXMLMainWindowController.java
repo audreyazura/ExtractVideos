@@ -93,7 +93,7 @@ public class FXMLMainWindowController
 		try
 		{
 		    ExtractVideos_DlAppli dlApp = new ExtractVideos_DlAppli();
-                    dlApp.extract(doDLBox.isSelected(), m_GUIApp, enteredAddress);
+                    dlApp.extract(!doDLBox.isSelected(), m_GUIApp, enteredAddress);
 		}
 		catch (NoSuchFileException | NullPointerException exNoFile)
 		{
