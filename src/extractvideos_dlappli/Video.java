@@ -28,8 +28,10 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.io.FileUtils;
 
 /**
  * Class representing a given video from the database file
@@ -78,7 +80,7 @@ public class Video
 	    try
 	    {
 		BufferedReader booruPage = new BufferedReader(new InputStreamReader(p_link.openStream()));
-		Pattern videoLinkPatttern = Pattern.compile("https://sakugabooru.com/data/[a-z0-9]*.(m|w)(p|e)(4|bm)");
+		Pattern videoLinkPatttern = Pattern.compile("https://www.sakugabooru.com/data/[a-z0-9]*.(m|w)(p|e)(4|bm)");
                 Pattern videoDeletedPattern = Pattern.compile("This post was deleted.");
 	
 		String dataLine;
@@ -93,6 +95,7 @@ public class Video
 		    if (linkMatcher.find())
 		    {
 			videoLink = new URL(linkMatcher.group());
+                        break;
 		    }
 		}
 
@@ -139,20 +142,24 @@ public class Video
 	//if there is no file extension in the video link, there is a problem, and we raise an exxception if it happens
 	if (fileTypeMatcher.find())
 	{
-	    String fileLink = p_Folder + "/" + p_videoIndex + " - " + m_videoID + "." + fileTypeMatcher.group();
+	    String fileName = p_videoIndex + " - " + m_videoID;
+            fileName = fileName.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
+            if (fileName.length() > 50)
+            {
+                fileName = fileName.substring(0, 50);
+            }
+            String fileLink = p_Folder + "/" + fileName + "." + fileTypeMatcher.group();
 
 	    System.out.println("Downloading " + fileLink);
 	    
 	    try
 	    {
-		InputStream videoStream = m_link.openStream();
-		Files.copy(videoStream, new File(fileLink).toPath());
-		videoStream.close();
+		FileUtils.copyURLToFile(m_link, new File(fileLink));
 	    } 
 	    catch (FileNotFoundException notFoundErr)
 	    {
                 ExtractVideos_DlAppli.CUTINFOLOGGER.info(m_link.toString() + "\tFichier non trouve : " + m_videoID);
-	    }	
+	    }
 	}
 	else
 	{
@@ -170,7 +177,13 @@ public class Video
      */
     public void makeSub (String p_Folder, String p_videoIndex) throws IOException
     {
-	BufferedWriter subBuffer = new BufferedWriter(new FileWriter(p_Folder + "/" + p_videoIndex + " - " + m_videoID + ".srt"));
+	String fileName = p_videoIndex + " - " + m_videoID;
+        fileName = fileName.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
+        if (fileName.length() > 50)
+        {
+            fileName = fileName.substring(0, 50);
+        }
+        BufferedWriter subBuffer = new BufferedWriter(new FileWriter(p_Folder + "/" + fileName + ".srt"));
 	
 	subBuffer.write("1");
 	subBuffer.newLine();
